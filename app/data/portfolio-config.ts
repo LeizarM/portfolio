@@ -229,7 +229,7 @@ export const portfolioConfig: PortfolioConfig = {
       {
         platform: 'LinkedIn',
         url: 'https://www.linkedin.com/in/marcelo-javier-jaimes-72942630b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
-        label: 'https://www.linkedin.com/in/marcelo-javier-jaimes-72942630b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
+        label: 'https://www.linkedin.com/in/ren-sama'
       },
       {
         platform: 'GitHub',
