@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
-export const dynamic = 'force-dynamic';
+// ¡Línea eliminada! Ya no forzamos el renderizado dinámico.
 
 export const metadata: Metadata = {
   title: 'Marcelo Javier Jaimes | Senior Full Stack Developer',
   description:
     'Portfolio of Marcelo Javier Jaimes — Senior Full Stack Developer & Systems Engineer specializing in Java, Spring Boot, and microservices architecture.',
-  metadataBase: new URL(process.env.NEXTAUTH_URL || 'http://localhost:3000'),
+  // Apuntamos el metadataBase a tu URL real de GitHub Pages
+  metadataBase: new URL('https://LeizarM.github.io/portfolio'),
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
