@@ -228,8 +228,8 @@ export const portfolioConfig: PortfolioConfig = {
     socials: [
       {
         platform: 'LinkedIn',
-        url: 'https://linkedin.com/in/marcelo-javier-jaimes-mleizar',
-        label: 'linkedin.com/in/marcelo-javier-jaimes-mleizar',
+        url: 'https://www.linkedin.com/in/marcelo-javier-jaimes-72942630b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
+        label: 'https://www.linkedin.com/in/marcelo-javier-jaimes-72942630b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
       },
       {
         platform: 'GitHub',
