@@ -83,7 +83,7 @@ export const portfolioConfig: PortfolioConfig = {
     ],
   },
   about: {
-    text: "Systems Engineer and Senior Full Stack Developer with over 6 years of experience in developing robust IT solutions and scalable enterprise applications. I specialize in the Java ecosystem (Spring Boot) and bring solid experience in designing microservice architectures. My technical depth extends to advanced database optimization (SQL/T-SQL) and building integrated modules for SAP Business One. When I'm not debugging or configuring a Mikrotik router, I enjoy exploring the deep lore of universes like Warhammer 40,000 and Berserk, or experimenting with AI image generation.",
+    text: "Systems Engineer and Senior Full Stack Developer with over 6 years of experience in developing robust IT solutions and scalable enterprise applications. I specialize in the Java ecosystem (Spring Boot) and bring solid experience in designing microservice architectures. My technical depth extends to advanced database optimization (SQL/T-SQL) and building integrated modules for SAP Business One. When I'm not debugging or configuring a Mikrotik router, I enjoy exploring the deep lore of universes like Warhammer 40,000 and All Tomorrows, or experimenting with AI image generation.",
   },
   experience: [
     {
