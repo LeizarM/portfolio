@@ -15,3 +15,11 @@ export const blockClass: Record<LineId, string> = {
   data: "bg-line-data text-on-line",
   infra: "bg-line-infra text-on-line",
 };
+
+/** Color de luz de cada área, como variable CSS. */
+export const lineVar: Record<LineId, string> = {
+  backend: "var(--line-backend)",
+  mobile: "var(--line-mobile)",
+  data: "var(--line-data)",
+  infra: "var(--line-infra)",
+};

@@ -2,14 +2,18 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
-import { hero, heroRotating, site, type Locale } from "@/lib/content";
+import { band, hero, site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { asset } from "@/lib/utils";
+import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
+import { DotPattern } from "@/components/magicui/dot-pattern";
+import { Marquee } from "@/components/magicui/marquee";
 import { Button } from "@/components/ui/button";
+import { Blob } from "./blob";
 import { Magnetic } from "./magnetic";
 
 gsap.registerPlugin(useGSAP, SplitText);
@@ -17,7 +21,6 @@ gsap.registerPlugin(useGSAP, SplitText);
 export function Hero({ lang }: { lang: Locale }) {
   const root = useRef<HTMLElement>(null);
   const t = ui[lang];
-  const phrases = heroRotating[lang];
 
   useGSAP(
     () => {
@@ -25,34 +28,22 @@ export function Hero({ lang }: { lang: Locale }) {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         let split: SplitText | undefined;
         let cancelled = false;
-
+        gsap.from(".hero-blob", { scale: 0.6, autoAlpha: 0, duration: 1.6, ease: "expo.out" });
         document.fonts.ready.then(() => {
           if (cancelled) return;
-          split = SplitText.create(".hero-name", { type: "chars", mask: "chars" });
+          split = SplitText.create(".hero-title", { type: "words,lines", mask: "lines" });
           gsap
             .timeline({ defaults: { ease: "power4.out" } })
-            .from(split.chars, { yPercent: 115, rotate: 8, duration: 1, stagger: 0.035 }, 0.15)
-            .from(".hero-fade", { y: 28, autoAlpha: 0, duration: 0.8, stagger: 0.1 }, 0.75);
+            .from(".hero-pill", { y: 16, autoAlpha: 0, duration: 0.7 }, 0.2)
+            .from(split.words, { yPercent: 110, duration: 1, stagger: 0.045 }, 0.3)
+            .from(".hero-fade", { y: 22, autoAlpha: 0, duration: 0.8, stagger: 0.1 }, 0.9);
         });
-
-        const steps = phrases.length;
-        const rotator = gsap.timeline({ repeat: -1, delay: 2.4 });
-        for (let i = 1; i <= steps; i++) {
-          rotator.to(".hero-rotator", {
-            yPercent: (-100 / (steps + 1)) * i,
-            duration: 0.7,
-            ease: "power3.inOut",
-            delay: 1.5,
-          });
-        }
-        rotator.set(".hero-rotator", { yPercent: 0 });
-
-        gsap.to(".hero-video", {
-          yPercent: 14,
+        gsap.to(".hero-blob", {
+          yPercent: 22,
+          scale: 0.86,
           ease: "none",
           scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
         });
-
         return () => {
           cancelled = true;
           split?.revert();
@@ -67,97 +58,77 @@ export function Hero({ lang }: { lang: Locale }) {
     <section
       ref={root}
       aria-labelledby="hero-titulo"
-      className="dark relative isolate flex min-h-[calc(100svh-4rem)] flex-col justify-end overflow-hidden bg-[#0d0e22] text-foreground"
+      className="relative isolate flex min-h-svh flex-col items-center justify-end overflow-hidden px-5 pb-10 pt-28 text-center sm:px-8"
     >
-      <video
-        className="hero-video absolute inset-0 -z-20 size-full object-cover motion-reduce:hidden"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster={asset("/media/hero-poster.jpg")}
-        aria-hidden
-      >
-        <source src={asset("/media/hero.webm")} type="video/webm" />
-        <source src={asset("/media/hero.mp4")} type="video/mp4" />
-      </video>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={asset("/media/hero-poster.jpg")}
-        alt=""
-        className="absolute inset-0 -z-20 hidden size-full object-cover motion-reduce:block"
+      <DotPattern
+        width={26}
+        height={26}
+        cr={1}
+        className="-z-30 fill-foreground/15 [mask-image:radial-gradient(60%_55%_at_50%_35%,black,transparent)]"
       />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-linear-to-t from-[#0d0e22] via-[#0d0e22]/75 to-[#0d0e22]/10" />
+      <div
+        aria-hidden
+        className="animate-aurora absolute left-1/2 top-[8%] -z-20 h-[62vh] w-[min(120vw,70rem)] -translate-x-1/2 rounded-full bg-[conic-gradient(from_120deg,var(--glow-a),var(--glow-b),var(--glow-c),var(--glow-a))] opacity-25 blur-[110px] dark:opacity-30"
+      />
+      <Blob className="hero-blob absolute left-1/2 top-[7%] -z-10 aspect-square h-[min(58vh,36rem)] -translate-x-1/2" />
 
-      <div className="mx-auto w-full max-w-7xl px-5 pb-12 pt-40 sm:px-8 sm:pb-16">
-        <p className="hero-fade type-narrow text-[1.15rem] font-semibold text-muted-foreground">
-          {hero.role[lang]}, {site.location[lang]}
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
+        <p className="hero-pill glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.9rem]">
+          <span aria-hidden className="size-1.5 rounded-full bg-line-data shadow-[0_0_8px_var(--line-data)]" />
+          <AnimatedShinyText className="mx-0 max-w-none">
+            {site.name}
+            <span className="hidden sm:inline">, {hero.role[lang].toLowerCase()}</span>
+          </AnimatedShinyText>
         </p>
         <h1
           id="hero-titulo"
-          aria-label={site.name}
-          className="hero-name type-wide mt-3 text-[clamp(2.9rem,9.4vw,8.6rem)] font-extrabold leading-[0.88] tracking-[-0.035em]"
+          className="hero-title mt-6 max-w-[17ch] text-[clamp(2.5rem,7.2vw,5.6rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
         >
-          <span className="block">Marcelo</span>
-          <span className="block sm:flex sm:gap-[0.24em]">
-            <span className="block">Javier</span>
-            <span className="block">Jaimes</span>
-          </span>
+          {hero.headline[lang]}
         </h1>
-
-        <div className="mt-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto]">
-          <div>
-            <p
-              aria-hidden
-              className="hero-fade type-semiwide flex flex-wrap gap-x-[0.4em] text-[clamp(1.25rem,2.7vw,2.25rem)] font-bold leading-[1.25]"
+        <p className="hero-fade mt-6 max-w-[56ch] text-[1.12rem] leading-relaxed text-muted-foreground">
+          {hero.pitch[lang]}
+        </p>
+        <div className="hero-fade mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Magnetic>
+            <Button asChild size="lg" className="group h-12 rounded-full px-6 text-base font-semibold">
+              <Link href="#proyectos">
+                {t.hero.seeProjects}
+                <ArrowRight aria-hidden className="transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </Button>
+          </Magnetic>
+          <Magnetic>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="glass h-12 rounded-full px-6 text-base font-semibold hover:bg-accent dark:bg-card dark:hover:bg-accent"
             >
-              <span>{hero.lead[lang]}</span>
-              <span className="block h-[1.25em] overflow-hidden text-primary">
-                <span className="hero-rotator flex flex-col">
-                  {[...phrases, phrases[0]].map((phrase, i) => (
-                    <span key={i} className="block h-[1.25em] whitespace-nowrap">
-                      {phrase}
-                    </span>
-                  ))}
-                </span>
-              </span>
-            </p>
-            <p className="hero-fade mt-4 max-w-[52ch] text-[1.1rem] leading-relaxed text-muted-foreground">
-              {hero.pitch[lang]}
-            </p>
-          </div>
-
-          <div className="hero-fade flex flex-wrap items-center gap-3">
-            <Magnetic>
-              <Button asChild size="lg" className="h-14 rounded-full px-8 text-[1.05rem] font-bold">
-                <Link href="#proyectos">{t.hero.seeProjects}</Link>
-              </Button>
-            </Magnetic>
-            <Magnetic>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-14 rounded-full border-foreground/40 bg-transparent px-8 text-[1.05rem] font-bold hover:bg-foreground hover:text-background dark:border-foreground/40 dark:bg-transparent dark:hover:bg-foreground"
-              >
-                <Link href="#contacto">{t.hero.write}</Link>
-              </Button>
-            </Magnetic>
-            {site.cv ? (
-              <Button asChild size="lg" variant="ghost" className="h-14 rounded-full px-6 text-[1.05rem] font-bold">
-                <a href={asset(site.cv)} download>
-                  {t.hero.cv}
-                </a>
-              </Button>
-            ) : null}
-          </div>
+              <Link href="#contacto">{t.hero.write}</Link>
+            </Button>
+          </Magnetic>
+          {site.cv ? (
+            <Button asChild size="lg" variant="ghost" className="h-12 rounded-full px-5 text-base font-semibold">
+              <a href={asset(site.cv)} download>
+                {t.hero.cv}
+              </a>
+            </Button>
+          ) : null}
         </div>
 
-        <p className="hero-fade type-narrow mt-12 hidden items-center gap-2 font-semibold text-muted-foreground sm:flex">
-          <ArrowDown aria-hidden className="size-4 animate-bounce" />
-          {t.hero.scroll}
-        </p>
+        <div
+          aria-hidden
+          className="hero-fade mt-14 w-full max-w-3xl [mask-image:linear-gradient(to_right,transparent,black_18%,black_82%,transparent)]"
+        >
+          <Marquee className="p-0 [--duration:38s] [--gap:2.75rem]">
+            {band.map((item) => (
+              <span key={item} className="font-mono text-[0.9rem] text-muted-foreground">
+                {item}
+              </span>
+            ))}
+          </Marquee>
+        </div>
       </div>
     </section>
   );

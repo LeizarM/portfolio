@@ -17,8 +17,9 @@ export const ui = {
       hint: "Cada línea es un área de trabajo. Las estaciones son proyectos.",
       stations: "Estaciones",
     },
-    about: { title: "Sobre mí" },
+    about: { title: "Sobre mí", where: "Dónde estoy", time: "Hora local", zone: "Zona horaria UTC−4" },
     projects: {
+      flow: "Recorrido de un dato",
       title: "Proyectos",
       intro: "Cuatro trabajos reales. Dos están en producción en empresas y no puedo mostrar su código; los otros dos son míos y están en GitHub.",
       open: "Ver el caso",
@@ -66,8 +67,9 @@ export const ui = {
       hint: "Each line is an area of work. The stations are projects.",
       stations: "Stations",
     },
-    about: { title: "About" },
+    about: { title: "About", where: "Where I am", time: "Local time", zone: "Time zone UTC−4" },
     projects: {
+      flow: "Path of a request",
       title: "Projects",
       intro: "Four real pieces of work. Two run in production at companies and I can't show their code; the other two are mine and on GitHub.",
       open: "Read the case",

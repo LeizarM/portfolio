@@ -18,7 +18,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
   return (
     <>
       <Header lang={lang} altHref={paths.project(other, project.slug)} />
-      <main id="contenido" className="mx-auto max-w-7xl px-5 pb-24 pt-10 sm:px-8 sm:pt-14">
+      <main id="contenido" className="mx-auto max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
         <Link
           href={`${paths.home(lang)}#proyectos`}
           className="inline-flex min-h-11 items-center gap-2 font-semibold text-muted-foreground hover:text-foreground"
@@ -29,7 +29,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
 
         <BlurFade duration={0.5} offset={10} direction="up">
           <header className="mt-8 max-w-4xl">
-            <p className="type-narrow flex flex-wrap items-center gap-x-3 gap-y-1 text-[1.05rem] font-semibold text-muted-foreground">
+            <p className="label-mono flex flex-wrap items-center gap-x-3 gap-y-1">
               {project.kind[lang]}
               {project.confidential ? (
                 <span className="inline-flex items-center gap-1">
@@ -38,13 +38,13 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
                 </span>
               ) : null}
             </p>
-            <h1 className="type-wide mt-3 text-[clamp(2.1rem,6vw,4rem)] font-extrabold leading-[0.98] tracking-[-0.025em]">
+            <h1 className="text-glow mt-3 pb-2 text-[clamp(2.2rem,6vw,4.4rem)] font-semibold leading-[1] tracking-[-0.045em]">
               {project.title[lang]}
             </h1>
             <p className="mt-6 max-w-[58ch] text-[1.2rem] leading-relaxed">{project.summary[lang]}</p>
             <ul aria-label={t.lines} className="mt-7 flex flex-wrap gap-x-5 gap-y-2">
               {project.lines.map((id) => (
-                <li key={id} className="type-narrow inline-flex items-center gap-2 font-semibold">
+                <li key={id} className="inline-flex items-center gap-2 font-mono text-[0.85rem]">
                   <span aria-hidden className={cn("h-1.5 w-7 rounded-full", lineClass[id].bg)} />
                   {getLine(id).name[lang]}
                 </li>
@@ -53,30 +53,30 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
           </header>
         </BlurFade>
 
-        <div className="mt-16 grid gap-x-16 gap-y-12 border-t pt-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div className="glass mt-14 grid gap-x-16 gap-y-12 rounded-3xl p-7 sm:p-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
           <div className="max-w-[66ch] space-y-12">
             <section aria-labelledby="caso-problema">
-              <h2 id="caso-problema" className="type-semiwide text-[1.5rem] font-extrabold">
+              <h2 id="caso-problema" className="text-[1.5rem] font-semibold tracking-[-0.03em]">
                 {t.problem}
               </h2>
               <p className="mt-3 text-muted-foreground">{project.problem[lang]}</p>
             </section>
             <section aria-labelledby="caso-rol">
-              <h2 id="caso-rol" className="type-semiwide text-[1.5rem] font-extrabold">
+              <h2 id="caso-rol" className="text-[1.5rem] font-semibold tracking-[-0.03em]">
                 {t.role}
               </h2>
               <p className="mt-3 text-muted-foreground">{project.role[lang]}</p>
             </section>
             <section aria-labelledby="caso-construccion">
-              <h2 id="caso-construccion" className="type-semiwide text-[1.5rem] font-extrabold">
+              <h2 id="caso-construccion" className="text-[1.5rem] font-semibold tracking-[-0.03em]">
                 {t.build}
               </h2>
               <ul className="mt-4 space-y-3">
                 {project.build[lang].map((item) => (
-                  <li key={item} className="relative pl-7 text-muted-foreground">
+                  <li key={item} className="relative pl-5 text-muted-foreground">
                     <span
                       aria-hidden
-                      className="absolute left-0 top-[0.55em] size-3 rounded-full border-[3px] border-foreground"
+                      className="absolute left-0 top-[0.62em] size-1.5 rounded-full bg-glow-b"
                     />
                     {item}
                   </li>
@@ -84,7 +84,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
               </ul>
             </section>
             <section aria-labelledby="caso-estado">
-              <h2 id="caso-estado" className="type-semiwide text-[1.5rem] font-extrabold">
+              <h2 id="caso-estado" className="text-[1.5rem] font-semibold tracking-[-0.03em]">
                 {t.status}
               </h2>
               <p className="mt-3 text-muted-foreground">{project.status[lang]}</p>
@@ -93,7 +93,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
 
           <aside className="space-y-10">
             <div>
-              <h2 className="type-narrow text-[1.05rem] font-semibold text-muted-foreground">{t.stack}</h2>
+              <h2 className="label-mono">{t.stack}</h2>
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {project.stack.map((tech) => (
                   <li key={tech}>
@@ -106,7 +106,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
             </div>
             {project.links.length > 0 ? (
               <div>
-                <h2 className="type-narrow text-[1.05rem] font-semibold text-muted-foreground">{t.links}</h2>
+                <h2 className="label-mono">{t.links}</h2>
                 <ul className="mt-2">
                   {project.links.map((link) => (
                     <li key={link.href}>
@@ -129,11 +129,11 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
 
         <Link
           href={paths.project(lang, next.slug)}
-          className="group mt-20 flex items-center justify-between gap-6 border-y py-8 hover:border-foreground"
+          className="glass group mt-6 flex items-center justify-between gap-6 rounded-3xl p-7 hover:bg-accent sm:p-10"
         >
           <span>
-            <span className="type-narrow block font-semibold text-muted-foreground">{t.next}</span>
-            <span className="type-semiwide mt-1 block text-[clamp(1.4rem,3vw,2rem)] font-extrabold leading-tight">
+            <span className="label-mono block">{t.next}</span>
+            <span className="mt-1 block text-[clamp(1.5rem,3vw,2.2rem)] font-semibold leading-tight tracking-[-0.035em]">
               {next.title[lang]}
             </span>
           </span>

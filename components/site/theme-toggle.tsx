@@ -17,7 +17,7 @@ export function ThemeToggle({ toLight, toDark }: { toLight: string; toDark: stri
       onThemeChange={setTheme}
       aria-label={theme === "dark" ? toLight : toDark}
       title={theme === "dark" ? toLight : toDark}
-      className="inline-flex size-10 cursor-pointer items-center justify-center rounded-md text-foreground hover:bg-accent [&_.sr-only]:hidden [&_svg]:size-[18px]"
+      className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-foreground hover:bg-accent [&_.sr-only]:hidden [&_svg]:size-[18px]"
     />
   );
 }

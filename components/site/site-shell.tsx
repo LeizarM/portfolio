@@ -1,7 +1,6 @@
 import { type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { personJsonLd } from "@/lib/seo";
-import { Cursor } from "./cursor";
 import { MotionProvider } from "./motion-provider";
 import { ThemeProvider } from "./theme-provider";
 
@@ -18,7 +17,6 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
         </a>
         <ThemeProvider>
           <MotionProvider>{children}</MotionProvider>
-          <Cursor />
         </ThemeProvider>
         <script
           type="application/ld+json"

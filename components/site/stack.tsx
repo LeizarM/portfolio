@@ -1,98 +1,69 @@
-"use client";
-
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { lines, type Locale } from "@/lib/content";
+import { Database, Network, Server, Smartphone, type LucideIcon } from "lucide-react";
+import { lines, type LineId, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
-import { lineClass } from "@/lib/lines";
-import { cn } from "@/lib/utils";
+import { lineVar } from "@/lib/lines";
+import { MagicCard } from "@/components/magicui/magic-card";
 import { Section } from "./section";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+const ICONS: Record<LineId, LucideIcon> = {
+  backend: Server,
+  mobile: Smartphone,
+  data: Database,
+  infra: Network,
+};
 
-/** Cada línea del mapa, desplegada: sus tecnologías son las paradas. */
+/** Las cuatro áreas de trabajo. Cada tarjeta se ilumina bajo el puntero con el color de su área. */
 export function Stack({ lang }: { lang: Locale }) {
-  const root = useRef<HTMLDivElement>(null);
   const t = ui[lang].stack;
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference) and (min-width: 768px)", () => {
-        gsap.utils.toArray<HTMLElement>(".stack-row").forEach((row) => {
-          const st = { trigger: row, start: "top 82%", once: true };
-          gsap.from(row.querySelector(".stack-track"), {
-            scaleX: 0,
-            transformOrigin: "left center",
-            duration: 1.1,
-            ease: "power3.inOut",
-            scrollTrigger: st,
-          });
-          gsap.from(row.querySelectorAll(".stack-dot"), {
-            scale: 0,
-            duration: 0.45,
-            ease: "back.out(2.4)",
-            stagger: 0.12,
-            delay: 0.25,
-            scrollTrigger: st,
-          });
-          gsap.from(row.querySelectorAll(".stack-item"), {
-            y: 18,
-            autoAlpha: 0,
-            duration: 0.6,
-            ease: "power3.out",
-            stagger: 0.12,
-            delay: 0.35,
-            scrollTrigger: st,
-          });
-        });
-      });
-      return () => mm.revert();
-    },
-    { scope: root },
-  );
-
   return (
     <Section id="stack" title={t.title} intro={t.intro}>
-      <div ref={root} className="space-y-14">
-        {lines.map((line) => (
-          <div key={line.id} id={`linea-${line.id}`} className="scroll-mt-24">
-            <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-5">
-              <h3 className="type-wide text-[clamp(1.5rem,2.6vw,2.1rem)] font-extrabold tracking-tight">{line.name[lang]}</h3>
-              <p className="text-muted-foreground">{line.summary[lang]}</p>
-            </div>
-
-            <div className="stack-row relative mt-7">
-              <span
-                aria-hidden
-                className={cn(
-                  "stack-track absolute left-[7px] top-0 h-full w-1.5 rounded-full md:left-0 md:top-[7px] md:h-1.5 md:w-full",
-                  lineClass[line.id].bg,
-                )}
-              />
-              <ul className="relative grid gap-6 md:grid-cols-5 md:gap-5">
-                {line.tech.map((tech) => (
-                  <li key={tech.name} className="relative pl-9 md:pl-0 md:pt-9">
+      <ul className="grid gap-4 md:grid-cols-2">
+        {lines.map((line) => {
+          const Icon = ICONS[line.id];
+          return (
+            <li key={line.id} id={`linea-${line.id}`} className="scroll-mt-28">
+              <MagicCard
+                className="h-full rounded-3xl"
+                gradientSize={320}
+                gradientFrom={lineVar[line.id]}
+                gradientTo="var(--glow-b)"
+                gradientColor={lineVar[line.id]}
+                gradientOpacity={0.14}
+              >
+                <div className="p-7 sm:p-9">
+                  <div className="flex items-center gap-4">
                     <span
-                      aria-hidden
-                      className="stack-dot absolute left-0 top-1 size-5 rounded-full border-4 border-foreground bg-background md:top-0"
-                    />
-                    <div className="stack-item">
-                      <p className="font-bold leading-snug">{tech.name}</p>
-                      <p className="mt-1 text-[0.95rem] leading-snug text-muted-foreground">
-                        <span className="sr-only">{t.usedIn}: </span>
-                        {tech.usedIn[lang]}
-                      </p>
+                      className="flex size-12 items-center justify-center rounded-2xl border"
+                      style={{
+                        color: lineVar[line.id],
+                        background: `color-mix(in srgb, ${lineVar[line.id]} 12%, transparent)`,
+                        boxShadow: `0 0 28px -6px ${lineVar[line.id]}`,
+                      }}
+                    >
+                      <Icon aria-hidden className="size-6" />
+                    </span>
+                    <div>
+                      <h3 className="text-[1.45rem] font-semibold tracking-[-0.03em]">{line.name[lang]}</h3>
+                      <p className="text-[0.98rem] text-muted-foreground">{line.summary[lang]}</p>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
+                  </div>
+                  <ul className="mt-7 divide-y">
+                    {line.tech.map((tech) => (
+                      <li key={tech.name} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-0.5 py-3">
+                        <span className="font-medium">{tech.name}</span>
+                        <span className="label-mono text-right">
+                          <span className="sr-only">{t.usedIn}: </span>
+                          {tech.usedIn[lang]}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </MagicCard>
+            </li>
+          );
+        })}
+      </ul>
     </Section>
   );
 }

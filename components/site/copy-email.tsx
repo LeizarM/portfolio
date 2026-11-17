@@ -18,7 +18,7 @@ export function CopyEmail({ email, label, done }: { email: string; label: string
   }
 
   return (
-    <Button onClick={copy} size="lg" className="h-14 cursor-pointer rounded-full bg-primary-foreground px-8 text-[1.05rem] font-bold text-primary hover:bg-primary-foreground/85">
+    <Button onClick={copy} size="lg" className="h-12 cursor-pointer rounded-full px-6 text-base font-semibold">
       {copied ? <Check aria-hidden /> : <Copy aria-hidden />}
       <span aria-live="polite">{copied ? done : label}</span>
     </Button>

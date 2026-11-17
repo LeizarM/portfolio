@@ -30,11 +30,11 @@ export function Experience({ lang }: { lang: Locale }) {
         );
         gsap.utils.toArray<HTMLElement>(".exp-job").forEach((job) => {
           gsap.from(job, {
-            y: 40,
+            y: 44,
             autoAlpha: 0,
-            duration: 0.8,
+            duration: 0.9,
             ease: "power3.out",
-            scrollTrigger: { trigger: job, start: "top 85%", once: true },
+            scrollTrigger: { trigger: job, start: "top 86%", once: true },
           });
         });
       });
@@ -47,45 +47,52 @@ export function Experience({ lang }: { lang: Locale }) {
     <Section id="experiencia" title={t.title}>
       <div ref={root}>
         <div className="exp-list relative">
-          <span aria-hidden className="absolute left-[7px] top-2 h-[calc(100%-1rem)] w-0.5 bg-border" />
-          <span aria-hidden className="exp-progress absolute left-[7px] top-2 h-[calc(100%-1rem)] w-0.5 bg-line-backend" />
-          <ol className="space-y-14">
+          <span aria-hidden className="absolute left-[7px] top-3 h-[calc(100%-1.5rem)] w-px bg-border" />
+          <span
+            aria-hidden
+            className="exp-progress absolute left-[6px] top-3 h-[calc(100%-1.5rem)] w-[3px] rounded-full bg-linear-to-b from-glow-a via-glow-b to-glow-c shadow-[0_0_14px_var(--glow-a)]"
+          />
+          <ol className="space-y-5">
             {jobs.map((job) => (
-              <li key={job.company} className="exp-job relative grid gap-x-10 gap-y-3 pl-10 lg:grid-cols-[15rem_minmax(0,1fr)]">
+              <li key={job.company} className="exp-job relative pl-10">
                 <span
                   aria-hidden
-                  className="absolute left-0 top-1.5 size-4 rounded-full border-[3px] border-foreground bg-background"
+                  className="absolute left-0 top-9 size-[15px] rounded-full border-2 border-foreground bg-background"
                 />
-                <p className="type-narrow text-[1.02rem] font-semibold text-muted-foreground">
-                  {job.period[lang]}
-                  <br />
-                  {job.place}
-                </p>
-                <div>
-                  <h3 className="type-wide text-[clamp(1.5rem,3vw,2.4rem)] font-extrabold leading-tight tracking-tight">{job.company}</h3>
-                  <p className="mt-1 font-semibold">{job.role[lang]}</p>
-                  <p className="mt-3 max-w-[62ch] text-muted-foreground">{job.summary[lang]}</p>
-                  {job.points[lang].length > 0 ? (
-                    <ul className="mt-4 max-w-[62ch] list-disc space-y-1.5 pl-5 marker:text-muted-foreground">
-                      {job.points[lang].map((point) => (
-                        <li key={point}>{point}</li>
-                      ))}
-                    </ul>
-                  ) : null}
+                <div className="glass grid gap-x-10 gap-y-3 rounded-3xl p-7 sm:p-9 lg:grid-cols-[13rem_minmax(0,1fr)]">
+                  <p className="label-mono leading-relaxed">
+                    {job.period[lang]}
+                    <br />
+                    {job.place}
+                  </p>
+                  <div>
+                    <h3 className="text-[1.6rem] font-semibold leading-tight tracking-[-0.035em]">{job.company}</h3>
+                    <p className="mt-1 font-medium">{job.role[lang]}</p>
+                    <p className="mt-3 max-w-[62ch] text-muted-foreground">{job.summary[lang]}</p>
+                    {job.points[lang].length > 0 ? (
+                      <ul className="mt-4 max-w-[62ch] space-y-2">
+                        {job.points[lang].map((point) => (
+                          <li key={point} className="relative pl-5">
+                            <span aria-hidden className="absolute left-0 top-[0.7em] size-1.5 rounded-full bg-glow-b" />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
                 </div>
               </li>
             ))}
           </ol>
         </div>
 
-        <h3 className="type-semiwide mt-20 text-[1.35rem] font-extrabold">{t.education}</h3>
-        <ul className="mt-6 grid gap-6 sm:grid-cols-2">
+        <h3 className="mt-16 text-[1.5rem] font-semibold tracking-[-0.03em]">{t.education}</h3>
+        <ul className="mt-5 grid gap-4 sm:grid-cols-2">
           {education.map((item) => (
-            <li key={item.school} className="border-t pt-4">
-              <p className="font-bold">{item.title[lang]}</p>
-              <p className="text-muted-foreground">
-                {item.school}, {item.year}
-              </p>
+            <li key={item.school} className="glass rounded-2xl p-6">
+              <p className="font-semibold">{item.title[lang]}</p>
+              <p className="text-muted-foreground">{item.school}</p>
+              <p className="label-mono mt-2">{item.year}</p>
             </li>
           ))}
         </ul>

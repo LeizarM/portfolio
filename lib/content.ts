@@ -30,8 +30,10 @@ export interface Project {
   kind: Localized;
   summary: Localized;
   lines: LineId[];
-  /** Color del bloque del proyecto: una de sus líneas. */
+  /** Color del proyecto: una de sus áreas. */
   accent: LineId;
+  /** Recorrido de un dato por el sistema, de la pantalla al almacenamiento. */
+  flow: string[];
   stack: string[];
   /** Proyectos de empresa: sin nombre, sin capturas, sin repositorio. */
   confidential: boolean;
@@ -64,7 +66,10 @@ export const site = {
 };
 
 export const hero = {
-  lead: { es: "Construyo", en: "I build" },
+  headline: {
+    es: "Construyo el software que mantiene una empresa en marcha.",
+    en: "I build the software that keeps a company running.",
+  },
   role: {
     es: "Desarrollador backend y móvil",
     en: "Backend and mobile developer",
@@ -74,14 +79,6 @@ export const hero = {
     en: "I build and run the software a company uses to sell, produce and collect: the ERP, the Java services, the Flutter apps and the network underneath.",
   },
 } satisfies Record<string, Localized>;
-
-/** Frases que rotan en el inicio, después de "Construyo". */
-export const heroRotating: LocalizedList = {
-  es: ["servicios en Java y Quarkus", "apps en Flutter", "módulos sobre SAP Business One", "la red que lo sostiene todo"],
-  en: ["services in Java and Quarkus", "apps in Flutter", "modules on SAP Business One", "the network that holds it all"],
-};
-
-export const band: string[] = ["Java", "Spring Boot", "Quarkus", "Flutter", "SQL Server", "SAP Business One"];
 
 export const about = {
   paragraphs: {
@@ -172,6 +169,7 @@ export const projects: Project[] = [
     },
     lines: ["backend", "mobile", "data", "infra"],
     accent: "backend",
+    flow: ["Flutter", "Spring Boot", "SQL Server", "SAP Business One"],
     stack: ["Java", "Spring Boot", "SQL Server", "T-SQL", "SAP Business One", "Flutter", "Riverpod"],
     confidential: true,
     problem: {
@@ -214,6 +212,7 @@ export const projects: Project[] = [
     },
     lines: ["backend", "mobile", "data"],
     accent: "mobile",
+    flow: ["Flutter", "Quarkus", "PostgreSQL"],
     stack: ["Java 21", "Quarkus 3", "PostgreSQL", "JWT", "Flutter"],
     confidential: false,
     problem: {
@@ -261,6 +260,7 @@ export const projects: Project[] = [
     },
     lines: ["mobile", "backend", "infra"],
     accent: "infra",
+    flow: ["React Native", "Nginx + CrowdSec", "NestJS", "PostgreSQL"],
     stack: ["React Native", "Expo", "NestJS", "Prisma", "PostgreSQL", "Docker", "Nginx", "CrowdSec", "GitHub Actions"],
     confidential: false,
     problem: {
@@ -312,6 +312,7 @@ export const projects: Project[] = [
     },
     lines: ["data"],
     accent: "data",
+    flow: ["SAP Business One", "Triggers y procedimientos", "SQL Server", "Crystal Reports"],
     stack: ["SQL Server", "T-SQL", "SAP Business One", "Crystal Reports"],
     confidential: true,
     problem: {
@@ -447,6 +448,8 @@ export const lab: { title: Localized; body: Localized }[] = [
     },
   },
 ];
+
+export const band: string[] = ["Java", "Spring Boot", "Quarkus", "Flutter", "SQL Server", "SAP Business One", "PostgreSQL", "NestJS"];
 
 export const labTicker: string[] = [
   "Fedora",

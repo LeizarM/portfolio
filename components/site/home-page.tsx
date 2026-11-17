@@ -1,7 +1,6 @@
 import { type Locale } from "@/lib/content";
 import { paths } from "@/lib/i18n";
 import { About } from "./about";
-import { Band } from "./band";
 import { Contact } from "./contact";
 import { Experience } from "./experience";
 import { Footer } from "./footer";
@@ -17,9 +16,8 @@ export function HomePage({ lang }: { lang: Locale }) {
       <Header lang={lang} altHref={paths.home(lang === "es" ? "en" : "es")} />
       <main id="contenido">
         <Hero lang={lang} />
-        <Band />
-        <About lang={lang} />
         <Projects lang={lang} />
+        <About lang={lang} />
         <Stack lang={lang} />
         <Experience lang={lang} />
         <Lab lang={lang} />
