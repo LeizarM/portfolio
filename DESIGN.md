@@ -54,7 +54,7 @@ Ambas se autoalojan con `@fontsource-variable`. Mayúscula solo inicial.
 |---|---|---|
 | Inicio | Titular enorme alineado a la izquierda, con una cápsula de paisaje incrustada (composición tipo Cuberto) | GSAP |
 | Inicio | Cordillera generada por código: montañas nevadas, árboles, niebla y estrellas; de día en modo claro | WebGL (shader propio) |
-| Inicio | Detalles de Bolivia sobre el paisaje: macizo tipo Illimani, teleférico, cóndor y llamas | SVG + CSS |
+| Inicio | Bolivia de oeste a este, un símbolo por departamento: Illimani y teleférico, Sajama, salar con flamencos, Cristo de la Concordia, torre de Sucre, viñedos, palmeras y toborochi, río con bufeo y castaño amazónico | SVG + CSS |
 | Inicio | El panel del paisaje crece al entrar con el scroll | GSAP ScrollTrigger (scrub) |
 | Inicio | Nombre con destello y frase que rota | React Bits `ShinyText`, `RotatingText` |
 | Inicio | Botón con luz que recorre el borde (los botones no se desplazan) | React Bits `StarBorder` |

@@ -148,13 +148,22 @@ export function Hero({ lang }: { lang: Locale }) {
           </div>
         </div>
 
-        <div className="hero-panel relative mt-14 aspect-[4/5] overflow-hidden rounded-[1.75rem] border sm:aspect-[16/8]">
+        <div className="hero-panel relative mt-14 aspect-[16/11] overflow-hidden rounded-[1.75rem] border sm:aspect-[16/8]">
           <NatureScene className="absolute inset-0" />
           <BoliviaOverlay />
-          <p className="label-mono absolute bottom-5 left-6 rounded-full bg-black/35 px-3 py-1.5 !text-white backdrop-blur-md">
+          <p className="label-mono absolute left-5 top-5 rounded-full bg-black/35 px-3 py-1.5 !text-white backdrop-blur-md">
             {t.hero.place}
           </p>
         </div>
+
+        <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-9 lg:gap-x-4">
+          {t.regions.map(([department, symbol]) => (
+            <li key={department} className="border-t pt-2">
+              <p className="text-[0.95rem] font-semibold">{department}</p>
+              <p className="label-mono !text-[0.72rem] leading-snug">{symbol}</p>
+            </li>
+          ))}
+        </ul>
 
         <div className="mt-12">
           <LogoLoop

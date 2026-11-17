@@ -39,6 +39,11 @@
   --scene-near: #124033;
   --scene-hill: #1c5a43;
   --scene-llama: #f1e8d6;
+  --scene-far: #9db4cf;
+  --scene-white: #fbfaf5;
+  --scene-water: #5aa9d6;
+  --scene-salt: #eaf4f7;
+  --scene-leaf: #2f7d4f;
   --radius: 0.75rem;
 }
 
@@ -71,6 +76,11 @@
   --scene-near: #030409;
   --scene-hill: #0b0c1c;
   --scene-llama: #cfc8ea;
+  --scene-far: #574a8a;
+  --scene-white: #dcd6f2;
+  --scene-water: #27357a;
+  --scene-salt: #8f88c4;
+  --scene-leaf: #173a3a;
 }
 
 @theme inline {

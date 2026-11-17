@@ -6,7 +6,7 @@ const VERT = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`
 
 /**
  * Cordillera al anochecer (o de día, en modo claro): cinco capas de montañas generadas con ruido,
- * un macizo nevado de tres cumbres en la más lejana, línea de árboles en las cercanas, niebla que se desplaza y estrellas.
+ * un macizo nevado de tres cumbres en la más lejana, la cordillera que baja hacia la llanura al este, línea de árboles en las cercanas, niebla que se desplaza y estrellas.
  */
 const FRAG = `
 precision highp float;
@@ -39,8 +39,11 @@ void main(){
 
   vec3 farC = mix(vec3(0.36, 0.26, 0.56), vec3(0.66, 0.78, 0.90), uLight);
   vec3 nearC = mix(vec3(0.012, 0.014, 0.035), vec3(0.07, 0.25, 0.20), uLight);
+  // El este es más verde.
+  vec3 jungleC = mix(vec3(0.02, 0.07, 0.07), vec3(0.10, 0.42, 0.24), uLight);
   vec3 snowC = mix(vec3(0.90, 0.84, 0.98), vec3(1.0), uLight);
 
+  float sx = gl_FragCoord.x / uRes.x;
   for (int i = 0; i < 5; i++) {
     float fi = float(i);
     float depth = fi / 4.0;
@@ -49,20 +52,26 @@ void main(){
     float amp = 0.36 - depth * 0.17;
     float n = fbm(vec2(x * (2.0 + depth * 2.2) + fi * 17.3 + uSeed, fi * 3.1));
     if (i < 2) n = mix(n, 1.0 - abs(2.0 * n - 1.0), 0.7);
-    float h = base + n * amp;
+    // De oeste a este la cordillera baja hasta convertirse en llanura.
+    float lowland = smoothstep(0.42, 0.95, sx);
+    float h = base * mix(1.0, 0.62, lowland * (1.0 - depth * 0.6)) + n * amp * mix(1.0, 0.22, lowland);
     if (i == 0) {
       // Macizo de tres cumbres, inspirado en el Illimani.
-      float sx = gl_FragCoord.x / uRes.x;
       h += 0.17 * exp(-pow((sx - 0.27) / 0.095, 2.0)) + 0.13 * exp(-pow((sx - 0.37) / 0.065, 2.0)) + 0.11 * exp(-pow((sx - 0.18) / 0.06, 2.0));
     }
     if (i >= 3) {
+      // Vegetación según la región: altiplano despejado al oeste, árboles dispersos en los valles
+      // y copas redondeadas de selva al este.
       float tx = x * (22.0 + fi * 9.0);
       float id = floor(tx);
       float t = abs(fract(tx) - 0.5) * 2.0;
-      h += pow(1.0 - t, 1.6) * 0.07 * step(0.25, hash(vec2(id, fi))) * (0.5 + 0.9 * hash(vec2(id, fi + 1.0)));
+      float valley = smoothstep(0.30, 0.48, sx) * (1.0 - smoothstep(0.62, 0.78, sx));
+      h += pow(1.0 - t, 1.6) * 0.06 * valley * step(0.45, hash(vec2(id, fi))) * (0.5 + 0.9 * hash(vec2(id, fi + 1.0)));
+      float jungle = smoothstep(0.62, 0.82, sx);
+      h += jungle * (0.035 + 0.03 * fbm(vec2(x * 9.0 + fi * 4.0, fi)) + 0.018 * abs(sin(x * (38.0 + fi * 11.0))));
     }
     float m = smoothstep(h + 0.0025, h - 0.0025, uv.y);
-    vec3 c = mix(farC, nearC, pow(depth, 0.8));
+    vec3 c = mix(farC, mix(nearC, jungleC, smoothstep(0.5, 0.95, sx) * 0.7), pow(depth, 0.8));
     if (i == 0) {
       float snow = smoothstep(h - 0.085, h - 0.015, uv.y) * smoothstep(0.60, 0.72, h);
       c = mix(c, snowC, snow * 0.85);
