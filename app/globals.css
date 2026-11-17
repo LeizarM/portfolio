@@ -148,6 +148,30 @@
   to { offset-distance: 100%; }
 }
 
+/* Tama cruza la pantalla. */
+@keyframes tama-walk {
+  from { translate: -22rem 0; }
+  to { translate: 100vw 0; }
+}
+@keyframes tama-step {
+  from { translate: 0 0; }
+  to { translate: 0 -5px; }
+}
+@keyframes tama-tail {
+  from { rotate: -10deg; }
+  to { rotate: 14deg; }
+}
+.tama {
+  translate: 1rem 0;
+  animation: tama-walk 9s linear forwards;
+}
+.tama-legs-a { animation: tama-step 0.22s ease-in-out infinite alternate; }
+.tama-legs-b { animation: tama-step 0.22s ease-in-out -0.22s infinite alternate-reverse; }
+.tama-tail {
+  transform-origin: 22px 44px;
+  animation: tama-tail 0.6s ease-in-out infinite alternate;
+}
+
 /* Superficie de vidrio: la base de todas las tarjetas. */
 @utility glass {
   border: 1px solid var(--border);

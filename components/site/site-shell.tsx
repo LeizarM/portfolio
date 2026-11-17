@@ -3,6 +3,7 @@ import { ui } from "@/lib/i18n";
 import { personJsonLd } from "@/lib/seo";
 import ClickSpark from "@/components/reactbits/ClickSpark";
 import { MotionProvider } from "./motion-provider";
+import { Tama } from "./tama";
 import { ThemeProvider } from "./theme-provider";
 
 /** Documento raíz compartido por los dos idiomas. */
@@ -22,6 +23,7 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
               {children}
             </ClickSpark>
           </MotionProvider>
+          <Tama lang={lang} />
         </ThemeProvider>
         <script
           type="application/ld+json"

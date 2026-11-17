@@ -1,6 +1,7 @@
 import { site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import ScrollVelocity from "@/components/reactbits/ScrollVelocity";
+import { TamaTrigger } from "./tama";
 
 export function Footer({ lang }: { lang: Locale }) {
   const t = ui[lang];
@@ -19,6 +20,7 @@ export function Footer({ lang }: { lang: Locale }) {
         <p>
           {site.name}, {new Date().getFullYear()}. {t.footer.built}
         </p>
+        <TamaTrigger />
         <a href={`${site.github}/portfolio`} className="underline underline-offset-4 hover:text-foreground">
           {t.footer.source}
         </a>
