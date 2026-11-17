@@ -6,7 +6,7 @@ import { BoliviaOverlay } from "./bolivia-overlay";
 import { NatureScene } from "./nature-scene";
 
 /** Ilustración opcional del panel. Si el archivo no existe, se usa el paisaje dibujado por código. */
-const ILLUSTRATION = "/media/bolivia.png";
+const ILLUSTRATION = "/media/bolivia.webp";
 
 type Source = "checking" | "image" | "code";
 
