@@ -2,7 +2,7 @@ import { Database, Network, Server, Smartphone, type LucideIcon } from "lucide-r
 import { lines, type LineId, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { lineVar } from "@/lib/lines";
-import { MagicCard } from "@/components/magicui/magic-card";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 import { Section } from "./section";
 
 const ICONS: Record<LineId, LucideIcon> = {
@@ -22,13 +22,12 @@ export function Stack({ lang }: { lang: Locale }) {
           const Icon = ICONS[line.id];
           return (
             <li key={line.id} id={`linea-${line.id}`} className="scroll-mt-28">
-              <MagicCard
-                className="h-full rounded-3xl"
-                gradientSize={320}
-                gradientFrom={lineVar[line.id]}
-                gradientTo="var(--glow-b)"
-                gradientColor={lineVar[line.id]}
-                gradientOpacity={0.14}
+              <SpotlightCard
+                className="glass h-full rounded-3xl"
+                spotlightColor={lineVar[line.id]}
+                spotlightSize={380}
+                intensity={0.22}
+                borderGlow={0.9}
               >
                 <div className="p-7 sm:p-9">
                   <div className="flex items-center gap-4">
@@ -59,7 +58,7 @@ export function Stack({ lang }: { lang: Locale }) {
                     ))}
                   </ul>
                 </div>
-              </MagicCard>
+              </SpotlightCard>
             </li>
           );
         })}

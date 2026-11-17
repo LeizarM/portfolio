@@ -3,7 +3,7 @@ import { about, site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { DotPattern } from "@/components/magicui/dot-pattern";
 import { LocalTime } from "./local-time";
-import { RevealText } from "./reveal-text";
+import ScrollReveal from "@/components/reactbits/ScrollReveal";
 import { Section } from "./section";
 
 export function About({ lang }: { lang: Locale }) {
@@ -13,13 +13,15 @@ export function About({ lang }: { lang: Locale }) {
     <Section id="sobre-mi" title={t.title}>
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="glass rounded-3xl p-7 sm:p-10 lg:col-span-2">
-          <RevealText
-            as="p"
-            mode="words"
-            className="text-[clamp(1.45rem,2.9vw,2.2rem)] font-medium leading-[1.2] tracking-[-0.025em]"
+          <ScrollReveal
+            baseOpacity={0.12}
+            baseRotation={2}
+            blurStrength={6}
+            containerClassName="!my-0"
+            textClassName="!text-[clamp(1.45rem,2.9vw,2.2rem)] !font-medium !leading-[1.2] tracking-[-0.025em]"
           >
             {lead}
-          </RevealText>
+          </ScrollReveal>
           <div className="mt-8 grid gap-6 text-muted-foreground sm:grid-cols-2">
             {rest.map((p) => (
               <p key={p}>{p}</p>

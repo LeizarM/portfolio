@@ -3,7 +3,8 @@ import { site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { CopyEmail } from "./copy-email";
-import { Magnetic } from "./magnetic";
+import Magnet from "@/components/reactbits/Magnet";
+import Threads from "@/components/reactbits/Threads";
 import { RevealText } from "./reveal-text";
 
 export function Contact({ lang }: { lang: Locale }) {
@@ -14,11 +15,24 @@ export function Contact({ lang }: { lang: Locale }) {
   ];
 
   return (
-    <section id="contacto" aria-labelledby="contacto-titulo" className="px-5 pb-24 pt-10 sm:px-8 sm:pb-32">
+    <section
+      id="contacto"
+      aria-labelledby="contacto-titulo"
+      className="px-5 pb-24 pt-10 sm:px-8 sm:pb-32"
+    >
       <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border bg-card-solid px-6 py-20 text-center sm:px-12 sm:py-28">
-        <div
+        <div aria-hidden className="absolute inset-0 opacity-70">
+          <Threads
+            color="#7c5cff"
+            accentColor="#3ddcff"
+            amplitude={1.1}
+            lineCount={34}
+            enableMouseInteraction
+          />
+        </div>
+        <span
           aria-hidden
-          className="animate-aurora absolute left-1/2 top-[-40%] -z-0 h-[32rem] w-[min(110%,60rem)] -translate-x-1/2 rounded-full bg-[conic-gradient(from_200deg,var(--glow-a),var(--glow-c),var(--glow-b),var(--glow-a))] opacity-30 blur-[100px]"
+          className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_45%,var(--card-solid),transparent)]"
         />
         <div className="relative flex flex-col items-center">
           <RevealText
@@ -27,7 +41,9 @@ export function Contact({ lang }: { lang: Locale }) {
           >
             {t.title}
           </RevealText>
-          <p className="mt-5 max-w-[48ch] text-[1.12rem] text-muted-foreground">{t.body}</p>
+          <p className="mt-5 max-w-[48ch] text-[1.12rem] text-muted-foreground">
+            {t.body}
+          </p>
           <a
             href={`mailto:${site.email}`}
             className="mt-9 break-all font-mono text-[clamp(1rem,2.4vw,1.5rem)] underline decoration-border underline-offset-[0.4em] hover:decoration-foreground"
@@ -35,9 +51,9 @@ export function Contact({ lang }: { lang: Locale }) {
             {site.email}
           </a>
           <div className="mt-7">
-            <Magnetic>
+            <Magnet padding={60} magnetStrength={3}>
               <CopyEmail email={site.email} label={t.copy} done={t.copied} />
-            </Magnetic>
+            </Magnet>
           </div>
           <ul className="mt-9 flex flex-wrap justify-center gap-2">
             {links.map((link) => (
@@ -49,13 +65,22 @@ export function Contact({ lang }: { lang: Locale }) {
                   className="glass group inline-flex h-11 items-center gap-1.5 rounded-full px-5 font-medium hover:bg-accent"
                 >
                   {link.label}
-                  <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <ArrowUpRight
+                    aria-hidden
+                    className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
                 </a>
               </li>
             ))}
           </ul>
         </div>
-        <BorderBeam size={260} duration={12} borderWidth={1.5} colorFrom="var(--glow-a)" colorTo="var(--glow-c)" />
+        <BorderBeam
+          size={260}
+          duration={12}
+          borderWidth={1.5}
+          colorFrom="var(--glow-a)"
+          colorTo="var(--glow-c)"
+        />
       </div>
     </section>
   );

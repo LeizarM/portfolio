@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { education, jobs, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
+import AnimatedContent from "@/components/reactbits/AnimatedContent";
 import { Section } from "./section";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -28,15 +29,6 @@ export function Experience({ lang }: { lang: Locale }) {
             scrollTrigger: { trigger: ".exp-list", start: "top 70%", end: "bottom 60%", scrub: 0.4 },
           },
         );
-        gsap.utils.toArray<HTMLElement>(".exp-job").forEach((job) => {
-          gsap.from(job, {
-            y: 44,
-            autoAlpha: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: job, start: "top 86%", once: true },
-          });
-        });
       });
       return () => mm.revert();
     },
@@ -59,6 +51,7 @@ export function Experience({ lang }: { lang: Locale }) {
                   aria-hidden
                   className="absolute left-0 top-9 size-[15px] rounded-full border-2 border-foreground bg-background"
                 />
+                <AnimatedContent distance={70} duration={0.9} blur={10} threshold={0.15}>
                 <div className="glass grid gap-x-10 gap-y-3 rounded-3xl p-7 sm:p-9 lg:grid-cols-[13rem_minmax(0,1fr)]">
                   <p className="label-mono leading-relaxed">
                     {job.period[lang]}
@@ -81,6 +74,7 @@ export function Experience({ lang }: { lang: Locale }) {
                     ) : null}
                   </div>
                 </div>
+                </AnimatedContent>
               </li>
             ))}
           </ol>

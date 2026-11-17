@@ -53,16 +53,23 @@ Ambas se autoalojan con `@fontsource-variable`. Mayúscula solo inicial.
 | Dónde | Qué | Con qué |
 |---|---|---|
 | Inicio | Esfera líquida 3D que respira y sigue al puntero | three.js (shader propio) |
-| Inicio | Aurora de fondo y titular que entra palabra por palabra | CSS + GSAP SplitText |
-| Inicio | Texto con destello en la píldora y cinta de tecnologías | Magic UI `animated-shiny-text`, `marquee` |
+| Inicio | Aurora de fondo | React Bits `Aurora` |
+| Inicio | Titular que entra palabra por palabra con desenfoque | React Bits `SplitText` |
+| Inicio | Nombre con destello y frase que rota | React Bits `ShinyText`, `RotatingText` |
+| Inicio | Botón con luz que recorre el borde; botones que se atraen al puntero | React Bits `StarBorder`, `Magnet` |
+| Inicio | Cinta de tecnologías | React Bits `LogoLoop` |
+| Toda la página | Chispas al hacer clic | React Bits `ClickSpark` |
 | Toda la página | Scroll suave | Lenis + GSAP ScrollTrigger |
 | Proyectos | Las tarjetas se apilan: la anterior se encoge y se apaga | GSAP ScrollTrigger (scrub) |
 | Proyectos | Haz de luz en el borde y una luz que baja por el recorrido del dato | Magic UI `border-beam` + CSS |
-| Sobre mí | Las palabras se encienden con el scroll; reloj con la hora de La Paz | GSAP SplitText |
-| Stack | La tarjeta se ilumina bajo el puntero con el color de su área | Magic UI `magic-card` |
-| Experiencia | Línea de luz que se llena con el scroll | GSAP ScrollTrigger (scrub) |
-| Botones | Se atraen hacia el puntero | GSAP quickTo |
+| Sobre mí | Las palabras se enfocan y se encienden con el scroll | React Bits `ScrollReveal` |
+| Stack | La tarjeta se ilumina bajo el puntero con el color de su área | React Bits `SpotlightCard` |
+| Experiencia | Cada empleo entra con desenfoque; línea de luz que se llena | React Bits `AnimatedContent` + GSAP |
+| Contacto | Hilos de luz que reaccionan al puntero | React Bits `Threads` |
+| Pie | Nombre gigante que acelera con el scroll | React Bits `ScrollVelocity` |
 | Cambio de tema | Revelado circular desde el botón | Magic UI `animated-theme-toggler` |
+
+Los componentes de React Bits están copiados en `components/reactbits/` (variante TypeScript + Tailwind).
 
 Reglas:
 

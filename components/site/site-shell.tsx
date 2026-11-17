@@ -1,6 +1,7 @@
 import { type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { personJsonLd } from "@/lib/seo";
+import ClickSpark from "@/components/reactbits/ClickSpark";
 import { MotionProvider } from "./motion-provider";
 import { ThemeProvider } from "./theme-provider";
 
@@ -16,7 +17,11 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
           {ui[lang].skip}
         </a>
         <ThemeProvider>
-          <MotionProvider>{children}</MotionProvider>
+          <MotionProvider>
+            <ClickSpark sparkColor={["#7c5cff", "#3ddcff", "#ff5caa"]} sparkCount={10} sparkRadius={22}>
+              {children}
+            </ClickSpark>
+          </MotionProvider>
         </ThemeProvider>
         <script
           type="application/ld+json"

@@ -449,6 +449,15 @@ export const lab: { title: Localized; body: Localized }[] = [
   },
 ];
 
+/** Frases que rotan en el inicio. */
+export const heroRotating = {
+  lead: { es: "Me dedico a", en: "I work on" },
+  phrases: {
+    es: ["servicios en Java y Quarkus", "apps en Flutter", "módulos sobre SAP Business One", "la red que lo sostiene"],
+    en: ["services in Java and Quarkus", "apps in Flutter", "modules on SAP Business One", "the network underneath"],
+  },
+} satisfies { lead: Localized; phrases: LocalizedList };
+
 export const band: string[] = ["Java", "Spring Boot", "Quarkus", "Flutter", "SQL Server", "SAP Business One", "PostgreSQL", "NestJS"];
 
 export const labTicker: string[] = [

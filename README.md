@@ -1,7 +1,7 @@
 # Portafolio de Marcelo Javier Jaimes
 
 Sitio personal en español e inglés. Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4,
-shadcn/ui, Magic UI, GSAP, Lenis, three.js y Lucide.
+shadcn/ui, React Bits, Magic UI, GSAP, Lenis, three.js y Lucide.
 
 ## Verlo en local
 
@@ -41,5 +41,6 @@ app/(en)        Páginas en inglés: /en y /en/projects/[slug]
 components/site Secciones del sitio
 components/ui   Componentes de shadcn/ui
 components/magicui  Componentes de Magic UI
+components/reactbits  Componentes de React Bits
 lib             Contenido, textos, SEO y utilidades
 ```
