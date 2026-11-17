@@ -66,9 +66,10 @@ export const site = {
 };
 
 export const hero = {
+  /** El titular va en dos partes: entre ambas se incrusta la cápsula con el paisaje. */
   headline: {
-    es: "Construyo el software que mantiene una empresa en marcha.",
-    en: "I build the software that keeps a company running.",
+    es: ["Construyo el", "software que mantiene una empresa en marcha."],
+    en: ["I build the", "software that keeps a company running."],
   },
   role: {
     es: "Desarrollador backend y móvil",
@@ -78,7 +79,7 @@ export const hero = {
     es: "Construyo y opero el software con el que una empresa vende, produce y cobra: el ERP, los servicios en Java, las apps en Flutter y la red que los sostiene.",
     en: "I build and run the software a company uses to sell, produce and collect: the ERP, the Java services, the Flutter apps and the network underneath.",
   },
-} satisfies Record<string, Localized>;
+};
 
 export const about = {
   paragraphs: {

@@ -10,146 +10,110 @@ import { useTheme } from "next-themes";
 import { band, hero, heroRotating, site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { asset } from "@/lib/utils";
-import { DotPattern } from "@/components/magicui/dot-pattern";
-import Aurora from "@/components/reactbits/Aurora";
 import LogoLoop from "@/components/reactbits/LogoLoop";
-import Magnet from "@/components/reactbits/Magnet";
 import RotatingText from "@/components/reactbits/RotatingText";
 import ShinyText from "@/components/reactbits/ShinyText";
-import SplitText from "@/components/reactbits/SplitText";
 import StarBorder from "@/components/reactbits/StarBorder";
 import { Button } from "@/components/ui/button";
-import { Blob } from "./blob";
+import { NatureScene } from "./nature-scene";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const subscribe = () => () => {};
 
+function Words({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(" ").map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom">
+          <span className="hero-word inline-block">{word}&nbsp;</span>
+        </span>
+      ))}
+    </>
+  );
+}
+
+/** Inicio con la composición de un estudio digital: titular enorme con un paisaje incrustado. */
 export function Hero({ lang }: { lang: Locale }) {
   const root = useRef<HTMLElement>(null);
   const t = ui[lang];
   const { resolvedTheme } = useTheme();
-  const mounted = useSyncExternalStore(
-    subscribe,
-    () => true,
-    () => false,
-  );
+  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
   const light = mounted && resolvedTheme === "light";
+  const [before = "", after = ""] = hero.headline[lang];
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.from(".hero-blob", {
-          scale: 0.6,
-          autoAlpha: 0,
-          duration: 1.6,
-          ease: "expo.out",
-        });
-        gsap.from(".hero-fade", {
-          y: 22,
-          autoAlpha: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          delay: 0.7,
-          ease: "power4.out",
-        });
-        gsap.to(".hero-blob", {
-          yPercent: 22,
-          scale: 0.86,
-          ease: "none",
-          scrollTrigger: {
-            trigger: root.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
+        gsap
+          .timeline({ defaults: { ease: "power4.out" } })
+          .from(".hero-word", { yPercent: 115, duration: 1.1, stagger: 0.05 }, 0.15)
+          .from(".hero-capsule", { scaleX: 0, transformOrigin: "left center", duration: 1, ease: "expo.out" }, 0.45)
+          .from(".hero-fade", { y: 24, autoAlpha: 0, duration: 0.8, stagger: 0.1 }, 0.9);
+        gsap.fromTo(
+          ".hero-panel",
+          { scale: 0.9, borderRadius: "3rem" },
+          {
+            scale: 1,
+            borderRadius: "1.75rem",
+            ease: "none",
+            scrollTrigger: { trigger: ".hero-panel", start: "top 95%", end: "top 30%", scrub: 0.5 },
           },
-        });
+        );
       });
       return () => mm.revert();
     },
-    { scope: root },
+    { scope: root, dependencies: [lang] },
   );
 
   return (
-    <section
-      ref={root}
-      aria-label={site.name}
-      className="relative isolate flex min-h-svh flex-col items-center justify-end overflow-hidden px-5 pb-10 pt-28 text-center sm:px-8"
-    >
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 -z-30 h-[78%] opacity-70"
-      >
-        <Aurora
-          colorStops={
-            light
-              ? ["#6a4dff", "#12a8dc", "#e63b8f"]
-              : ["#7c5cff", "#3ddcff", "#ff5caa"]
-          }
-          lightMode={light}
-          amplitude={1.1}
-          blend={0.6}
-          speed={0.7}
-        />
-      </div>
-      <DotPattern
-        width={26}
-        height={26}
-        cr={1}
-        className="-z-20 fill-foreground/15 [mask-image:radial-gradient(60%_55%_at_50%_35%,black,transparent)]"
-      />
-      <Blob className="hero-blob absolute left-1/2 top-[7%] -z-10 aspect-square h-[min(58vh,36rem)] -translate-x-1/2" />
-
-      <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
+    <section ref={root} aria-label={site.name} className="relative px-5 pb-16 pt-32 sm:px-8 sm:pt-40">
+      <div className="mx-auto max-w-7xl">
         <p className="hero-fade glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.9rem]">
-          <span
-            aria-hidden
-            className="size-1.5 rounded-full bg-line-data shadow-[0_0_8px_var(--line-data)]"
-          />
+          <span aria-hidden className="size-1.5 rounded-full bg-line-data shadow-[0_0_8px_var(--line-data)]" />
           <ShinyText
             text={site.name}
             color={light ? "#5b5d6b" : "#a3a5b3"}
             shineColor={light ? "#0b0b10" : "#ffffff"}
             speed={3}
           />
+          <span className="hidden text-muted-foreground sm:inline">{hero.role[lang]}</span>
         </p>
 
-        <SplitText
-          tag="h1"
-          text={hero.headline[lang]}
-          splitType="words"
-          trigger="load"
-          delay={55}
-          duration={1}
-          ease="power4.out"
-          from={{ opacity: 0, y: 60, filter: "blur(12px)" }}
-          to={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          textAlign="center"
-          className="mt-6 max-w-[17ch] text-[clamp(2.5rem,7.2vw,5.6rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
-        />
-
-        <p className="hero-fade mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[clamp(1.05rem,2vw,1.4rem)] font-medium">
-          <span className="text-muted-foreground">
-            {heroRotating.lead[lang]}
+        <h1
+          aria-label={`${before} ${after}`}
+          className="mt-8 text-[clamp(2.6rem,8.4vw,8.25rem)] font-medium leading-[0.96] tracking-[-0.055em]"
+        >
+          <span aria-hidden>
+            <Words text={before} />
+            <span className="hero-capsule mx-[0.06em] inline-block h-[0.74em] w-[1.85em] translate-y-[0.03em] overflow-hidden rounded-full border align-baseline">
+              <NatureScene seed={7} cropFrom={0.3} cropTo={0.82} className="size-full" />
+            </span>{" "}
+            <Words text={after} />
           </span>
-          <RotatingText
-            texts={heroRotating.phrases[lang]}
-            rotationInterval={2600}
-            staggerDuration={0.018}
-            staggerFrom="last"
-            mainClassName="overflow-hidden rounded-xl bg-linear-to-r from-glow-a to-glow-b px-3 py-1 text-white"
-            splitLevelClassName="overflow-hidden"
-            transition={{ type: "spring", damping: 30, stiffness: 400 }}
-          />
-        </p>
+        </h1>
 
-        <p className="hero-fade mt-6 max-w-[56ch] text-[1.08rem] leading-relaxed text-muted-foreground">
-          {hero.pitch[lang]}
-        </p>
+        <div className="mt-12 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto]">
+          <div>
+            <p className="hero-fade flex flex-wrap items-center gap-x-3 gap-y-2 text-[clamp(1.1rem,2vw,1.5rem)] font-medium">
+              <span className="text-muted-foreground">{heroRotating.lead[lang]}</span>
+              <RotatingText
+                texts={heroRotating.phrases[lang]}
+                rotationInterval={2600}
+                staggerDuration={0.018}
+                staggerFrom="last"
+                mainClassName="overflow-hidden rounded-xl bg-linear-to-r from-glow-a to-glow-b px-3 py-1 text-white"
+                splitLevelClassName="overflow-hidden"
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              />
+            </p>
+            <p className="hero-fade mt-5 max-w-[54ch] text-[1.1rem] leading-relaxed text-muted-foreground">
+              {hero.pitch[lang]}
+            </p>
+          </div>
 
-        <div className="hero-fade mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Magnet padding={50} magnetStrength={3}>
+          <div className="hero-fade flex flex-wrap items-center gap-3">
             <StarBorder
               as="a"
               href="#proyectos"
@@ -158,49 +122,42 @@ export function Hero({ lang }: { lang: Locale }) {
               duration={5}
               radius={999}
               theme={light ? "light" : "dark"}
-              className="group h-12 px-6 text-base font-semibold"
+              className="group h-13 px-7 text-base font-semibold"
             >
               <span className="inline-flex items-center gap-2">
                 {t.hero.seeProjects}
-                <ArrowRight
-                  aria-hidden
-                  className="size-4 transition-transform group-hover:translate-x-0.5"
-                />
+                <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />
               </span>
             </StarBorder>
-          </Magnet>
-          <Magnet padding={50} magnetStrength={3}>
             <Button
               asChild
               size="lg"
               variant="outline"
-              className="glass h-12 rounded-full px-6 text-base font-semibold hover:bg-accent dark:bg-card dark:hover:bg-accent"
+              className="glass h-13 rounded-full px-7 text-base font-semibold hover:bg-accent dark:bg-card dark:hover:bg-accent"
             >
               <Link href="#contacto">{t.hero.write}</Link>
             </Button>
-          </Magnet>
-          {site.cv ? (
-            <Button
-              asChild
-              size="lg"
-              variant="ghost"
-              className="h-12 rounded-full px-5 text-base font-semibold"
-            >
-              <a href={asset(site.cv)} download>
-                {t.hero.cv}
-              </a>
-            </Button>
-          ) : null}
+            {site.cv ? (
+              <Button asChild size="lg" variant="ghost" className="h-13 rounded-full px-5 text-base font-semibold">
+                <a href={asset(site.cv)} download>
+                  {t.hero.cv}
+                </a>
+              </Button>
+            ) : null}
+          </div>
         </div>
 
-        <div className="hero-fade mt-14 w-full max-w-3xl">
+        <div className="hero-panel relative mt-14 aspect-[4/5] overflow-hidden rounded-[1.75rem] border sm:aspect-[16/8]">
+          <NatureScene className="absolute inset-0" />
+          <p className="label-mono absolute bottom-5 left-6 rounded-full bg-black/35 px-3 py-1.5 !text-white backdrop-blur-md">
+            {t.hero.place}
+          </p>
+        </div>
+
+        <div className="mt-12">
           <LogoLoop
             logos={band.map((item) => ({
-              node: (
-                <span className="font-mono text-[0.9rem] text-muted-foreground">
-                  {item}
-                </span>
-              ),
+              node: <span className="font-mono text-[0.9rem] text-muted-foreground">{item}</span>,
               title: item,
             }))}
             speed={45}

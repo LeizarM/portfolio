@@ -3,7 +3,6 @@ import { site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { CopyEmail } from "./copy-email";
-import Magnet from "@/components/reactbits/Magnet";
 import Threads from "@/components/reactbits/Threads";
 import { RevealText } from "./reveal-text";
 
@@ -51,9 +50,7 @@ export function Contact({ lang }: { lang: Locale }) {
             {site.email}
           </a>
           <div className="mt-7">
-            <Magnet padding={60} magnetStrength={3}>
               <CopyEmail email={site.email} label={t.copy} done={t.copied} />
-            </Magnet>
           </div>
           <ul className="mt-9 flex flex-wrap justify-center gap-2">
             {links.map((link) => (

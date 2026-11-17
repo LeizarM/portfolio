@@ -5,7 +5,7 @@ Identidad visual del portafolio de Marcelo Javier Jaimes. Es la referencia para 
 ## Concepto
 
 **Negro con luz.** Fondo casi negro, superficies de vidrio y tres fuentes de luz (violeta, cian y
-magenta) que aparecen en la esfera 3D del inicio, en los bordes de las tarjetas y en los títulos.
+magenta) que aparecen en el paisaje del inicio, en los bordes de las tarjetas y en los títulos.
 El contenido es sobrio y verificable; el brillo está en la forma, no en el texto.
 
 ## Color
@@ -52,11 +52,11 @@ Ambas se autoalojan con `@fontsource-variable`. Mayúscula solo inicial.
 
 | Dónde | Qué | Con qué |
 |---|---|---|
-| Inicio | Esfera líquida 3D que respira y sigue al puntero | three.js (shader propio) |
-| Inicio | Aurora de fondo | React Bits `Aurora` |
-| Inicio | Titular que entra palabra por palabra con desenfoque | React Bits `SplitText` |
+| Inicio | Titular enorme alineado a la izquierda, con una cápsula de paisaje incrustada (composición tipo Cuberto) | GSAP |
+| Inicio | Cordillera generada por código: montañas nevadas, árboles, niebla y estrellas; de día en modo claro | WebGL (shader propio) |
+| Inicio | El panel del paisaje crece al entrar con el scroll | GSAP ScrollTrigger (scrub) |
 | Inicio | Nombre con destello y frase que rota | React Bits `ShinyText`, `RotatingText` |
-| Inicio | Botón con luz que recorre el borde; botones que se atraen al puntero | React Bits `StarBorder`, `Magnet` |
+| Inicio | Botón con luz que recorre el borde (los botones no se desplazan) | React Bits `StarBorder` |
 | Inicio | Cinta de tecnologías | React Bits `LogoLoop` |
 | Toda la página | Chispas al hacer clic | React Bits `ClickSpark` |
 | Toda la página | Scroll suave | Lenis + GSAP ScrollTrigger |
@@ -73,8 +73,9 @@ Los componentes de React Bits están copiados en `components/reactbits/` (varian
 
 Reglas:
 
-- Todo respeta `prefers-reduced-motion`: la esfera se dibuja una vez y queda quieta.
-- three.js se carga aparte, después de la primera pintura, y se pausa cuando el inicio sale de pantalla.
+- Todo respeta `prefers-reduced-motion`: el paisaje se dibuja una vez y queda quieto.
+- El paisaje se pausa cuando sale de pantalla.
+- Los botones no se mueven con el puntero.
 - El contenido nunca depende de JavaScript ni de WebGL para ser visible.
 
 ## Voz
