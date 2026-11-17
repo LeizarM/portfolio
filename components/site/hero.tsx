@@ -15,6 +15,7 @@ import RotatingText from "@/components/reactbits/RotatingText";
 import ShinyText from "@/components/reactbits/ShinyText";
 import StarBorder from "@/components/reactbits/StarBorder";
 import { Button } from "@/components/ui/button";
+import { BoliviaOverlay } from "./bolivia-overlay";
 import { NatureScene } from "./nature-scene";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -149,6 +150,7 @@ export function Hero({ lang }: { lang: Locale }) {
 
         <div className="hero-panel relative mt-14 aspect-[4/5] overflow-hidden rounded-[1.75rem] border sm:aspect-[16/8]">
           <NatureScene className="absolute inset-0" />
+          <BoliviaOverlay />
           <p className="label-mono absolute bottom-5 left-6 rounded-full bg-black/35 px-3 py-1.5 !text-white backdrop-blur-md">
             {t.hero.place}
           </p>

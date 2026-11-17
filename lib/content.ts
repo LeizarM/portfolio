@@ -15,8 +15,8 @@ export interface Line {
   id: LineId;
   name: Localized;
   summary: Localized;
-  /** Tecnologías de la línea y el proyecto o empleo donde se usaron. */
-  tech: { name: string; usedIn: Localized }[];
+  /** Tecnologías del área: en qué proyectos se usaron (por slug) y, si aplica, dónde más. */
+  tech: { name: string; in: string[]; other?: Localized }[];
 }
 
 export interface ProjectLink {
@@ -27,6 +27,8 @@ export interface ProjectLink {
 export interface Project {
   slug: string;
   title: Localized;
+  /** Nombre corto para encabezados de tabla. */
+  short: Localized;
   kind: Localized;
   summary: Localized;
   lines: LineId[];
@@ -76,8 +78,8 @@ export const hero = {
     en: "Backend and mobile developer",
   },
   pitch: {
-    es: "Construyo y opero el software con el que una empresa vende, produce y cobra: el ERP, los servicios en Java, las apps en Flutter y la red que los sostiene.",
-    en: "I build and run the software a company uses to sell, produce and collect: the ERP, the Java services, the Flutter apps and the network underneath.",
+    es: "Construyo y opero el software con el que una empresa vende, produce y cobra: el sistema que acompaña a SAP, los servicios en Java, las apps en Flutter y la red que los sostiene.",
+    en: "I build and run the software a company uses to sell, produce and collect: the system alongside SAP, the Java services, the Flutter apps and the network underneath.",
   },
 };
 
@@ -105,11 +107,11 @@ export const lines: Line[] = [
       en: "Services and APIs in the Java ecosystem, with NestJS on personal projects.",
     },
     tech: [
-      { name: "Java", usedIn: { es: "ERP de distribución, Yahveh", en: "Distribution ERP, Yahveh" } },
-      { name: "Spring Boot", usedIn: { es: "ERP de distribución", en: "Distribution ERP" } },
-      { name: "Quarkus", usedIn: { es: "Yahveh", en: "Yahveh" } },
-      { name: "NestJS", usedIn: { es: "Mundial 2026", en: "Mundial 2026" } },
-      { name: "JWT", usedIn: { es: "Yahveh, Mundial 2026", en: "Yahveh, Mundial 2026" } },
+      { name: "Java", in: ["sistema-apoyo-sap", "yahveh"] },
+      { name: "Spring Boot", in: ["sistema-apoyo-sap"] },
+      { name: "Quarkus", in: ["yahveh"] },
+      { name: "NestJS", in: ["quinielas"] },
+      { name: "JWT", in: ["yahveh", "quinielas"] },
     ],
   },
   {
@@ -120,11 +122,11 @@ export const lines: Line[] = [
       en: "iOS and Android apps, and the web interfaces that go with them.",
     },
     tech: [
-      { name: "Flutter", usedIn: { es: "ERP de distribución, Yahveh", en: "Distribution ERP, Yahveh" } },
-      { name: "Riverpod", usedIn: { es: "ERP de distribución", en: "Distribution ERP" } },
-      { name: "React Native + Expo", usedIn: { es: "Mundial 2026", en: "Mundial 2026" } },
-      { name: "TypeScript", usedIn: { es: "Mundial 2026, este sitio", en: "Mundial 2026, this site" } },
-      { name: "Angular y Vue.js", usedIn: { es: "Impexpap (2018–2022)", en: "Impexpap (2018–2022)" } },
+      { name: "Flutter", in: ["sistema-apoyo-sap", "yahveh"] },
+      { name: "Riverpod", in: ["sistema-apoyo-sap"] },
+      { name: "React Native + Expo", in: ["quinielas"] },
+      { name: "TypeScript", in: ["quinielas"], other: { es: "Este sitio", en: "This site" } },
+      { name: "Angular y Vue.js", in: [], other: { es: "Impexpap (2018–2022)", en: "Impexpap (2018–2022)" } },
     ],
   },
   {
@@ -135,11 +137,11 @@ export const lines: Line[] = [
       en: "SAP Business One from the inside: the database, its rules and its reports.",
     },
     tech: [
-      { name: "SQL Server y T-SQL", usedIn: { es: "ERP de distribución, SAP B1", en: "Distribution ERP, SAP B1" } },
-      { name: "SAP Business One", usedIn: { es: "Esppapel, Impexpap", en: "Esppapel, Impexpap" } },
-      { name: "Procedimientos y triggers", usedIn: { es: "Reglas de integridad en SAP B1", en: "SAP B1 integrity rules" } },
-      { name: "PostgreSQL", usedIn: { es: "Yahveh, Mundial 2026", en: "Yahveh, Mundial 2026" } },
-      { name: "Prisma", usedIn: { es: "Mundial 2026", en: "Mundial 2026" } },
+      { name: "SQL Server y T-SQL", in: ["sistema-apoyo-sap", "sap-b1-integridad"] },
+      { name: "SAP Business One", in: ["sistema-apoyo-sap", "sap-b1-integridad"] },
+      { name: "Procedimientos y triggers", in: ["sap-b1-integridad"] },
+      { name: "PostgreSQL", in: ["yahveh", "quinielas"] },
+      { name: "Prisma", in: ["quinielas"] },
     ],
   },
   {
@@ -150,23 +152,24 @@ export const lines: Line[] = [
       en: "Servers, containers and the office network.",
     },
     tech: [
-      { name: "Linux (Fedora)", usedIn: { es: "Mundial 2026, servidor propio", en: "Mundial 2026, home server" } },
-      { name: "Docker y Podman", usedIn: { es: "Mundial 2026, servidor propio", en: "Mundial 2026, home server" } },
-      { name: "Nginx y CrowdSec", usedIn: { es: "Mundial 2026", en: "Mundial 2026" } },
-      { name: "GitHub Actions", usedIn: { es: "Mundial 2026, este sitio", en: "Mundial 2026, this site" } },
-      { name: "MikroTik", usedIn: { es: "Esppapel", en: "Esppapel" } },
+      { name: "Linux (Fedora)", in: ["quinielas"], other: { es: "Servidor propio", en: "Home server" } },
+      { name: "Docker y Podman", in: ["quinielas"], other: { es: "Servidor propio", en: "Home server" } },
+      { name: "Nginx y CrowdSec", in: ["quinielas"] },
+      { name: "GitHub Actions", in: ["quinielas"], other: { es: "Este sitio", en: "This site" } },
+      { name: "MikroTik", in: [], other: { es: "Red de Esppapel", en: "Esppapel network" } },
     ],
   },
 ];
 
 export const projects: Project[] = [
   {
-    slug: "erp-distribucion",
-    title: { es: "ERP auxiliar para distribución", en: "Companion ERP for distribution" },
+    slug: "sistema-apoyo-sap",
+    title: { es: "Sistema de apoyo para SAP", en: "Support system for SAP" },
+    short: { es: "Apoyo SAP", en: "SAP support" },
     kind: { es: "Sistema de empresa, en producción", en: "Company system, in production" },
     summary: {
-      es: "El sistema que rodea a SAP Business One en una empresa de distribución: precios, cobranza y producción en un solo lugar.",
-      en: "The system that wraps SAP Business One at a distribution company: pricing, collections and production in one place.",
+      es: "El sistema que acompaña a SAP Business One en una empresa de distribución. No reemplaza al ERP: cubre precios, cobranza y producción, que SAP no resolvía.",
+      en: "The system that sits alongside SAP Business One at a distribution company. It doesn't replace the ERP: it covers pricing, collections and production, which SAP didn't handle.",
     },
     lines: ["backend", "mobile", "data", "infra"],
     accent: "backend",
@@ -206,6 +209,7 @@ export const projects: Project[] = [
   {
     slug: "yahveh",
     title: { es: "Yahveh", en: "Yahveh" },
+    short: { es: "Yahveh", en: "Yahveh" },
     kind: { es: "Ventas e inventario", en: "Sales and inventory" },
     summary: {
       es: "Sistema de ventas e inventario con backend en Quarkus y app en Flutter: clientes, precios, descuentos y notas de entrega.",
@@ -252,12 +256,13 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "mundial-2026",
-    title: { es: "Mundial 2026", en: "Mundial 2026" },
-    kind: { es: "App móvil de quinielas", en: "Football pool mobile app" },
+    slug: "quinielas",
+    title: { es: "Sistema de quinielas deportivas", en: "Sports pool system" },
+    short: { es: "Quinielas", en: "Sports pool" },
+    kind: { es: "App móvil y backend", en: "Mobile app and backend" },
     summary: {
-      es: "App de quinielas para el Mundial, con su propio backend y un despliegue que monté de principio a fin en un servidor Fedora.",
-      en: "A World Cup pool app with its own backend and a deployment I set up end to end on a Fedora server.",
+      es: "App de quinielas deportivas, con su propio backend y un despliegue que monté de principio a fin en un servidor Fedora.",
+      en: "A sports pool app with its own backend and a deployment I set up end to end on a Fedora server.",
     },
     lines: ["mobile", "backend", "infra"],
     accent: "infra",
@@ -306,6 +311,7 @@ export const projects: Project[] = [
   {
     slug: "sap-b1-integridad",
     title: { es: "Reglas de integridad en SAP Business One", en: "Integrity rules in SAP Business One" },
+    short: { es: "Reglas SAP B1", en: "SAP B1 rules" },
     kind: { es: "Base de datos, en producción", en: "Database, in production" },
     summary: {
       es: "Procedimientos almacenados y triggers que impiden que un documento mal cargado llegue a la contabilidad.",
@@ -351,7 +357,7 @@ export const jobs: Job[] = [
     period: { es: "Junio de 2022 a la fecha", en: "June 2022 to present" },
     place: "La Paz",
     summary: {
-      es: "Responsable del sistema auxiliar integrado con SAP Business One y de la infraestructura que lo sostiene.",
+      es: "Responsable del sistema de apoyo integrado con SAP Business One y de la infraestructura que lo sostiene.",
       en: "Accountable for the companion system integrated with SAP Business One and for the infrastructure under it.",
     },
     points: {
@@ -474,6 +480,11 @@ export const labTicker: string[] = [
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
+}
+
+/** Proyectos, en el mismo orden, para usarlos como columnas. */
+export function projectShort(slug: string, lang: Locale): string {
+  return getProject(slug)?.short[lang] ?? slug;
 }
 
 export function getLine(id: LineId): Line {

@@ -36,6 +36,9 @@
   --line-data: #0a8f63;
   --line-infra: #0b7fc4;
   --on-line: #ffffff;
+  --scene-near: #124033;
+  --scene-hill: #1c5a43;
+  --scene-llama: #f1e8d6;
   --radius: 0.75rem;
 }
 
@@ -65,6 +68,9 @@
   --line-data: #4fe0b0;
   --line-infra: #5ccfff;
   --on-line: #050507;
+  --scene-near: #030409;
+  --scene-hill: #0b0c1c;
+  --scene-llama: #cfc8ea;
 }
 
 @theme inline {
@@ -124,6 +130,12 @@
     from { transform: translate3d(-6%, -4%, 0) rotate(0deg) scale(1); }
     to { transform: translate3d(6%, 5%, 0) rotate(18deg) scale(1.15); }
   }
+}
+
+/* Recorridos del paisaje: cabinas del teleférico y cóndor. */
+@keyframes travel {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
 }
 
 /* Superficie de vidrio: la base de todas las tarjetas. */

@@ -54,6 +54,7 @@ Ambas se autoalojan con `@fontsource-variable`. Mayúscula solo inicial.
 |---|---|---|
 | Inicio | Titular enorme alineado a la izquierda, con una cápsula de paisaje incrustada (composición tipo Cuberto) | GSAP |
 | Inicio | Cordillera generada por código: montañas nevadas, árboles, niebla y estrellas; de día en modo claro | WebGL (shader propio) |
+| Inicio | Detalles de Bolivia sobre el paisaje: macizo tipo Illimani, teleférico, cóndor y llamas | SVG + CSS |
 | Inicio | El panel del paisaje crece al entrar con el scroll | GSAP ScrollTrigger (scrub) |
 | Inicio | Nombre con destello y frase que rota | React Bits `ShinyText`, `RotatingText` |
 | Inicio | Botón con luz que recorre el borde (los botones no se desplazan) | React Bits `StarBorder` |
@@ -62,7 +63,7 @@ Ambas se autoalojan con `@fontsource-variable`. Mayúscula solo inicial.
 | Toda la página | Scroll suave | Lenis + GSAP ScrollTrigger |
 | Proyectos | Índice de filas grandes: cada proyecto se despliega al tocarlo y muestra el recorrido de un dato con una luz que lo atraviesa | CSS |
 | Sobre mí | Las palabras se enfocan y se encienden con el scroll | React Bits `ScrollReveal` |
-| Stack | La tarjeta se ilumina bajo el puntero con el color de su área | React Bits `SpotlightCard` |
+| Stack | Matriz de tecnologías por proyecto: un punto de luz donde se usó cada una; la fila se resalta al pasar | CSS |
 | Experiencia | Cada empleo entra con desenfoque; línea de luz que se llena | React Bits `AnimatedContent` + GSAP |
 | Contacto | Hilos de luz que reaccionan al puntero | React Bits `Threads` |
 | Pie | Nombre gigante que acelera con el scroll | React Bits `ScrollVelocity` |

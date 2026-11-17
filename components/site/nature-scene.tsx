@@ -6,7 +6,7 @@ const VERT = `attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }`
 
 /**
  * Cordillera al anochecer (o de día, en modo claro): cinco capas de montañas generadas con ruido,
- * nieve en la más lejana, línea de árboles en las cercanas, niebla que se desplaza y estrellas.
+ * un macizo nevado de tres cumbres en la más lejana, línea de árboles en las cercanas, niebla que se desplaza y estrellas.
  */
 const FRAG = `
 precision highp float;
@@ -50,6 +50,11 @@ void main(){
     float n = fbm(vec2(x * (2.0 + depth * 2.2) + fi * 17.3 + uSeed, fi * 3.1));
     if (i < 2) n = mix(n, 1.0 - abs(2.0 * n - 1.0), 0.7);
     float h = base + n * amp;
+    if (i == 0) {
+      // Macizo de tres cumbres, inspirado en el Illimani.
+      float sx = gl_FragCoord.x / uRes.x;
+      h += 0.17 * exp(-pow((sx - 0.27) / 0.095, 2.0)) + 0.13 * exp(-pow((sx - 0.37) / 0.065, 2.0)) + 0.11 * exp(-pow((sx - 0.18) / 0.06, 2.0));
+    }
     if (i >= 3) {
       float tx = x * (22.0 + fi * 9.0);
       float id = floor(tx);

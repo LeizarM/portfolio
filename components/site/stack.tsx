@@ -1,68 +1,112 @@
-import { Database, Network, Server, Smartphone, type LucideIcon } from "lucide-react";
-import { lines, type LineId, type Locale } from "@/lib/content";
-import { ui } from "@/lib/i18n";
+import Link from "next/link";
+import { lines, projects, projectShort, type Locale } from "@/lib/content";
+import { paths, ui } from "@/lib/i18n";
 import { lineVar } from "@/lib/lines";
-import SpotlightCard from "@/components/reactbits/SpotlightCard";
 import { Section } from "./section";
 
-const ICONS: Record<LineId, LucideIcon> = {
-  backend: Server,
-  mobile: Smartphone,
-  data: Database,
-  infra: Network,
-};
-
-/** Las cuatro áreas de trabajo. Cada tarjeta se ilumina bajo el puntero con el color de su área. */
+/**
+ * Matriz de tecnologías por proyecto. En pantallas anchas es una tabla: una fila por tecnología,
+ * una columna por proyecto y un punto donde se usó. En móvil, la misma información como lista.
+ */
 export function Stack({ lang }: { lang: Locale }) {
   const t = ui[lang].stack;
+
   return (
     <Section id="stack" title={t.title} intro={t.intro}>
-      <ul className="grid gap-4 md:grid-cols-2">
-        {lines.map((line) => {
-          const Icon = ICONS[line.id];
-          return (
-            <li key={line.id} id={`linea-${line.id}`} className="scroll-mt-28">
-              <SpotlightCard
-                className="glass h-full rounded-3xl"
-                spotlightColor={lineVar[line.id]}
-                spotlightSize={380}
-                intensity={0.22}
-                borderGlow={0.9}
-              >
-                <div className="p-7 sm:p-9">
-                  <div className="flex items-center gap-4">
-                    <span
-                      className="flex size-12 items-center justify-center rounded-2xl border"
-                      style={{
-                        color: lineVar[line.id],
-                        background: `color-mix(in srgb, ${lineVar[line.id]} 12%, transparent)`,
-                        boxShadow: `0 0 28px -6px ${lineVar[line.id]}`,
-                      }}
-                    >
-                      <Icon aria-hidden className="size-6" />
+      <div className="hidden md:block">
+        <table className="w-full table-fixed border-collapse text-left">
+          <thead>
+            <tr className="border-b">
+              <th scope="col" className="label-mono w-[26%] pb-4 font-normal">
+                {t.tech}
+              </th>
+              {projects.map((project) => (
+                <th key={project.slug} scope="col" className="pb-4 text-center font-normal">
+                  <Link
+                    href={paths.project(lang, project.slug)}
+                    className="label-mono underline decoration-transparent underline-offset-4 transition-colors hover:text-foreground hover:decoration-current"
+                  >
+                    {project.short[lang]}
+                  </Link>
+                </th>
+              ))}
+              <th scope="col" className="label-mono w-[20%] pb-4 text-right font-normal">
+                {t.other}
+              </th>
+            </tr>
+          </thead>
+          {lines.map((line) => (
+            <tbody key={line.id} id={`linea-${line.id}`} className="scroll-mt-28">
+              <tr>
+                <th scope="colgroup" colSpan={projects.length + 2} className="pb-3 pt-10 text-left">
+                  <span className="flex items-baseline gap-4">
+                    <span className="flex items-center gap-3 text-[1.5rem] font-semibold tracking-[-0.035em]">
+                      <span
+                        aria-hidden
+                        className="size-2.5 rounded-full"
+                        style={{ background: lineVar[line.id], boxShadow: `0 0 14px ${lineVar[line.id]}` }}
+                      />
+                      {line.name[lang]}
                     </span>
-                    <div>
-                      <h3 className="text-[1.45rem] font-semibold tracking-[-0.03em]">{line.name[lang]}</h3>
-                      <p className="text-[0.98rem] text-muted-foreground">{line.summary[lang]}</p>
-                    </div>
-                  </div>
-                  <ul className="mt-7 divide-y">
-                    {line.tech.map((tech) => (
-                      <li key={tech.name} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-0.5 py-3">
-                        <span className="font-medium">{tech.name}</span>
-                        <span className="label-mono text-right">
-                          <span className="sr-only">{t.usedIn}: </span>
-                          {tech.usedIn[lang]}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </SpotlightCard>
-            </li>
-          );
-        })}
-      </ul>
+                    <span className="font-normal text-muted-foreground">{line.summary[lang]}</span>
+                  </span>
+                </th>
+              </tr>
+              {line.tech.map((tech) => (
+                <tr key={tech.name} className="group border-t transition-colors hover:bg-accent">
+                  <th scope="row" className="py-3.5 pl-3 text-[1.08rem] font-medium">
+                    {tech.name}
+                  </th>
+                  {projects.map((project) => (
+                    <td key={project.slug} className="py-3.5 text-center">
+                      {tech.in.includes(project.slug) ? (
+                        <span
+                          role="img"
+                          aria-label={t.yes}
+                          className="inline-block size-3.5 rounded-full transition-transform duration-300 group-hover:scale-125"
+                          style={{ background: lineVar[line.id], boxShadow: `0 0 12px ${lineVar[line.id]}` }}
+                        />
+                      ) : (
+                        <span aria-hidden className="inline-block size-1 rounded-full bg-border" />
+                      )}
+                    </td>
+                  ))}
+                  <td className="label-mono py-3.5 pr-3 text-right">{tech.other?.[lang] ?? ""}</td>
+                </tr>
+              ))}
+            </tbody>
+          ))}
+        </table>
+      </div>
+
+      <div className="space-y-10 md:hidden">
+        {lines.map((line) => (
+          <div key={line.id}>
+            <h3 className="flex items-center gap-3 text-[1.4rem] font-semibold tracking-[-0.035em]">
+              <span
+                aria-hidden
+                className="size-2.5 rounded-full"
+                style={{ background: lineVar[line.id], boxShadow: `0 0 14px ${lineVar[line.id]}` }}
+              />
+              {line.name[lang]}
+            </h3>
+            <p className="mt-1 text-muted-foreground">{line.summary[lang]}</p>
+            <ul className="mt-4 divide-y border-y">
+              {line.tech.map((tech) => (
+                <li key={tech.name} className="py-3">
+                  <p className="font-medium">{tech.name}</p>
+                  <p className="label-mono mt-1">
+                    <span className="sr-only">{t.usedIn}: </span>
+                    {[...tech.in.map((slug) => projectShort(slug, lang)), ...(tech.other ? [tech.other[lang]] : [])].join(
+                      ", ",
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </Section>
   );
 }
