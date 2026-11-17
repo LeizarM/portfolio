@@ -100,8 +100,10 @@ export function Hero({ lang }: { lang: Locale }) {
           className="hero-name type-wide mt-3 text-[clamp(2.9rem,9.4vw,8.6rem)] font-extrabold leading-[0.88] tracking-[-0.035em]"
         >
           <span className="block">Marcelo</span>
-          <span className="block sm:mr-[0.24em] sm:inline">Javier</span>
-          <span className="block sm:inline">Jaimes</span>
+          <span className="block sm:flex sm:gap-[0.24em]">
+            <span className="block">Javier</span>
+            <span className="block">Jaimes</span>
+          </span>
         </h1>
 
         <div className="mt-8 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto]">
