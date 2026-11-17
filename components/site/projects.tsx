@@ -1,40 +1,35 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Lock } from "lucide-react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { projects, type Locale, type Project } from "@/lib/content";
+import { ArrowUpRight, Lock, Plus } from "lucide-react";
+import { getLine, projects, type Locale, type Project } from "@/lib/content";
 import { paths, ui } from "@/lib/i18n";
 import { lineVar } from "@/lib/lines";
-import { BorderBeam } from "@/components/magicui/border-beam";
+import { cn } from "@/lib/utils";
 import { RevealText } from "./reveal-text";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-/** Recorrido de un dato por el sistema, con una luz que baja por la línea. */
+/** Recorrido de un dato por el sistema, en una sola fila, con una luz que lo atraviesa. */
 function Flow({ project, label }: { project: Project; label: string }) {
   const color = lineVar[project.accent];
   return (
-    <div className="relative rounded-2xl border bg-background/60 p-5 sm:p-6">
+    <div>
       <p className="label-mono">{label}</p>
-      <ol className="relative mt-5 space-y-3">
-        <span aria-hidden className="absolute bottom-5 left-[11px] top-5 w-px bg-border" />
+      <ol className="relative mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-0">
+        <span aria-hidden className="absolute inset-x-0 top-1/2 hidden h-px bg-border sm:block" />
         <span
           aria-hidden
-          className="animate-flow absolute left-[8px] h-10 w-[7px] rounded-full blur-[3px]"
-          style={{ background: `linear-gradient(to bottom, transparent, ${color})` }}
+          className="animate-flow absolute top-1/2 hidden h-[5px] w-16 -translate-y-1/2 rounded-full blur-[2px] sm:block"
+          style={{ background: `linear-gradient(to right, transparent, ${color})` }}
         />
-        {project.flow.map((node) => (
-          <li key={node} className="relative flex items-center gap-4">
+        {project.flow.map((node, i) => (
+          <li key={node} className={cn("relative flex items-center", i > 0 && "sm:ml-auto")}>
             <span
-              aria-hidden
-              className="relative z-10 size-[23px] shrink-0 rounded-full border bg-card-solid"
-              style={{ boxShadow: `inset 0 0 0 5px var(--card-solid), inset 0 0 0 12px ${color}` }}
-            />
-            <span className="glass w-full rounded-xl px-4 py-2.5 font-mono text-[0.88rem]">{node}</span>
+              className="rounded-full border bg-card-solid px-4 py-2 font-mono text-[0.85rem]"
+              style={{ boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${color} 35%, transparent)` }}
+            >
+              {node}
+            </span>
           </li>
         ))}
       </ol>
@@ -42,97 +37,144 @@ function Flow({ project, label }: { project: Project; label: string }) {
   );
 }
 
-function ProjectCard({ project, lang, index }: { project: Project; lang: Locale; index: number }) {
+function ProjectRow({
+  project,
+  lang,
+  open,
+  onToggle,
+}: {
+  project: Project;
+  lang: Locale;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const t = ui[lang].projects;
   const color = lineVar[project.accent];
+  const panelId = `proyecto-${project.slug}`;
+
   return (
-    <li className="project-card sticky" style={{ top: `calc(6rem + ${index * 14}px)` }}>
-      <Link
-        href={paths.project(lang, project.slug)}
-        className="project-inner group relative grid gap-8 overflow-hidden rounded-[2rem] border bg-card-solid p-7 sm:p-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-12 lg:p-12"
-      >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -right-24 -top-24 size-[26rem] rounded-full opacity-25 blur-[90px] transition-opacity duration-500 group-hover:opacity-45"
-          style={{ background: color }}
-        />
-        <div className="relative flex flex-col">
-          <p className="label-mono flex flex-wrap items-center gap-x-3">
-            <span style={{ color }}>{project.kind[lang]}</span>
-            {project.confidential ? (
-              <span className="inline-flex items-center gap-1">
-                <Lock aria-hidden className="size-3" />
-                {t.confidential}
-              </span>
-            ) : null}
-          </p>
-          <h3 className="mt-4 max-w-[18ch] text-[clamp(1.8rem,3.6vw,3rem)] font-semibold leading-[1.02] tracking-[-0.04em]">
+    <li className="group/row border-t last:border-b">
+      <h3>
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="flex w-full cursor-pointer items-center gap-5 py-7 text-left sm:gap-8 sm:py-9"
+        >
+          <span
+            aria-hidden
+            className="size-3 shrink-0 rounded-full transition-transform duration-300 group-hover/row:scale-150"
+            style={{ background: color, boxShadow: `0 0 16px ${color}` }}
+          />
+          <span
+            className={cn(
+              "flex-1 text-[clamp(1.7rem,5.2vw,4.6rem)] font-medium leading-[1] tracking-[-0.05em] transition-[color,opacity,translate] duration-300",
+              open ? "opacity-100" : "opacity-55 group-hover/row:translate-x-2 group-hover/row:opacity-100",
+            )}
+          >
             {project.title[lang]}
-          </h3>
-          <p className="mt-4 max-w-[50ch] text-[1.05rem] text-muted-foreground">{project.summary[lang]}</p>
-          <ul className="mt-6 flex flex-wrap gap-1.5">
-            {project.stack.map((tech) => (
-              <li key={tech} className="rounded-full border bg-card px-3 py-1 font-mono text-[0.78rem] text-muted-foreground">
-                {tech}
-              </li>
-            ))}
-          </ul>
-          <span className="mt-8 inline-flex items-center gap-2 pt-2 font-semibold lg:mt-auto">
-            {t.open}
-            <span className="flex size-8 items-center justify-center rounded-full border transition-all duration-300 group-hover:bg-foreground group-hover:text-background">
-              <ArrowUpRight aria-hidden className="size-4 transition-transform duration-300 group-hover:rotate-45" />
-            </span>
           </span>
+          <span className="label-mono hidden max-w-[16rem] text-right lg:block">{project.kind[lang]}</span>
+          <span
+            className={cn(
+              "flex size-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 sm:size-14",
+              open ? "rotate-45 bg-foreground text-background" : "group-hover/row:bg-accent",
+            )}
+          >
+            <Plus aria-hidden className="size-5" />
+            <span className="sr-only">{t.expand}</span>
+          </span>
+        </button>
+      </h3>
+
+      <div
+        id={panelId}
+        className={cn(
+          "grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+        )}
+      >
+        <div className={cn("overflow-hidden", !open && "invisible")}>
+          <div className="grid gap-10 pb-10 pl-8 sm:pl-11 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
+            <div>
+              <p className="label-mono flex flex-wrap items-center gap-x-3 lg:hidden">
+                <span style={{ color }}>{project.kind[lang]}</span>
+              </p>
+              <p className="mt-3 max-w-[52ch] text-[1.15rem] leading-relaxed lg:mt-0">{project.summary[lang]}</p>
+              <p className="label-mono mt-5 flex flex-wrap items-center gap-x-4 gap-y-1">
+                {project.lines.map((id) => (
+                  <span key={id} className="inline-flex items-center gap-1.5">
+                    <span aria-hidden className="size-1.5 rounded-full" style={{ background: lineVar[id] }} />
+                    {getLine(id).name[lang]}
+                  </span>
+                ))}
+                {project.confidential ? (
+                  <span className="inline-flex items-center gap-1">
+                    <Lock aria-hidden className="size-3" />
+                    {t.confidential}
+                  </span>
+                ) : null}
+              </p>
+              <Link
+                href={paths.project(lang, project.slug)}
+                tabIndex={open ? 0 : -1}
+                className="group/link mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground"
+              >
+                {t.open}
+                <ArrowUpRight
+                  aria-hidden
+                  className="size-4 transition-transform duration-300 group-hover/link:rotate-45"
+                />
+              </Link>
+            </div>
+
+            <div className="space-y-8">
+              <Flow project={project} label={t.flow} />
+              <ul className="flex flex-wrap gap-1.5">
+                {project.stack.map((tech) => (
+                  <li
+                    key={tech}
+                    className="rounded-full border bg-card px-3 py-1 font-mono text-[0.78rem] text-muted-foreground"
+                  >
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
-        <div className="relative">
-          <Flow project={project} label={t.flow} />
-        </div>
-        <BorderBeam size={220} duration={10} delay={index * 2} borderWidth={1.5} colorFrom={color} colorTo="var(--glow-b)" />
-      </Link>
+      </div>
     </li>
   );
 }
 
-/** Las tarjetas se apilan al bajar: la anterior se encoge y se apaga bajo la siguiente. */
+/** Índice de proyectos: una fila grande por proyecto que se despliega al tocarla. */
 export function Projects({ lang }: { lang: Locale }) {
-  const root = useRef<HTMLElement>(null);
   const t = ui[lang].projects;
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const cards = gsap.utils.toArray<HTMLElement>(".project-card");
-        cards.forEach((card, i) => {
-          const next = cards[i + 1];
-          if (!next) return;
-          gsap.to(card.querySelector(".project-inner"), {
-            scale: 0.93,
-            opacity: 0.45,
-            transformOrigin: "center top",
-            ease: "none",
-            scrollTrigger: { trigger: next, start: "top 85%", end: "top 20%", scrub: true },
-          });
-        });
-      });
-      return () => mm.revert();
-    },
-    { scope: root },
-  );
+  const [open, setOpen] = useState<string | null>(projects[0]?.slug ?? null);
 
   return (
-    <section ref={root} id="proyectos" aria-labelledby="proyectos-titulo" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <RevealText
-          id="proyectos-titulo"
-          className="text-[clamp(2.2rem,5.4vw,3.9rem)] font-semibold leading-[1.02] tracking-[-0.04em]"
-        >
-          {t.title}
-        </RevealText>
-        <p className="mt-5 max-w-[60ch] text-[1.1rem] text-muted-foreground">{t.intro}</p>
-        <ul className="mt-12 space-y-6">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.slug} project={project} lang={lang} index={i} />
+    <section id="proyectos" aria-labelledby="proyectos-titulo" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <RevealText
+            id="proyectos-titulo"
+            className="text-[clamp(2.2rem,5.4vw,3.9rem)] font-semibold leading-[1.02] tracking-[-0.04em]"
+          >
+            {t.title}
+          </RevealText>
+          <p className="max-w-[52ch] text-[1.05rem] text-muted-foreground lg:text-right">{t.intro}</p>
+        </div>
+        <ul className="mt-12">
+          {projects.map((project) => (
+            <ProjectRow
+              key={project.slug}
+              project={project}
+              lang={lang}
+              open={open === project.slug}
+              onToggle={() => setOpen((current) => (current === project.slug ? null : project.slug))}
+            />
           ))}
         </ul>
       </div>

@@ -116,9 +116,9 @@
     30%, 60% { background-position: calc(100% + var(--shiny-width)) 0; }
   }
   @keyframes flow {
-    0% { top: -12%; opacity: 0; }
+    0% { left: -8%; opacity: 0; }
     15%, 85% { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
+    100% { left: 100%; opacity: 0; }
   }
   @keyframes aurora {
     from { transform: translate3d(-6%, -4%, 0) rotate(0deg) scale(1); }

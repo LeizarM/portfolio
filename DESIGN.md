@@ -60,8 +60,7 @@ Ambas se autoalojan con `@fontsource-variable`. Mayúscula solo inicial.
 | Inicio | Cinta de tecnologías | React Bits `LogoLoop` |
 | Toda la página | Chispas al hacer clic | React Bits `ClickSpark` |
 | Toda la página | Scroll suave | Lenis + GSAP ScrollTrigger |
-| Proyectos | Las tarjetas se apilan: la anterior se encoge y se apaga | GSAP ScrollTrigger (scrub) |
-| Proyectos | Haz de luz en el borde y una luz que baja por el recorrido del dato | Magic UI `border-beam` + CSS |
+| Proyectos | Índice de filas grandes: cada proyecto se despliega al tocarlo y muestra el recorrido de un dato con una luz que lo atraviesa | CSS |
 | Sobre mí | Las palabras se enfocan y se encienden con el scroll | React Bits `ScrollReveal` |
 | Stack | La tarjeta se ilumina bajo el puntero con el color de su área | React Bits `SpotlightCard` |
 | Experiencia | Cada empleo entra con desenfoque; línea de luz que se llena | React Bits `AnimatedContent` + GSAP |

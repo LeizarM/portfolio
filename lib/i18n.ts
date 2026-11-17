@@ -20,8 +20,9 @@ export const ui = {
     about: { title: "Sobre mí", where: "Dónde estoy", time: "Hora local", zone: "Zona horaria UTC−4" },
     projects: {
       flow: "Recorrido de un dato",
+      expand: "Mostrar detalles",
       title: "Proyectos",
-      intro: "Cuatro trabajos reales. Dos están en producción en empresas y no puedo mostrar su código; los otros dos son míos y están en GitHub.",
+      intro: "Cuatro trabajos reales. Dos están en producción en empresas y no puedo mostrar su código; los otros dos son míos y están en GitHub. Toca uno para ver el detalle.",
       open: "Ver el caso",
       confidential: "Confidencial",
     },
@@ -70,8 +71,9 @@ export const ui = {
     about: { title: "About", where: "Where I am", time: "Local time", zone: "Time zone UTC−4" },
     projects: {
       flow: "Path of a request",
+      expand: "Show details",
       title: "Projects",
-      intro: "Four real pieces of work. Two run in production at companies and I can't show their code; the other two are mine and on GitHub.",
+      intro: "Four real pieces of work. Two run in production at companies and I can't show their code; the other two are mine and on GitHub. Pick one to see the detail.",
       open: "Read the case",
       confidential: "Confidential",
     },
