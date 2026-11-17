@@ -1,0 +1,108 @@
+import type { Locale } from "./content";
+
+/** Textos de interfaz. El contenido (proyectos, experiencia) está en content.ts. */
+export const ui = {
+  es: {
+    nav: { projects: "Proyectos", stack: "Stack", experience: "Experiencia", contact: "Contacto" },
+    skip: "Saltar al contenido",
+    switchLang: "English",
+    switchLangLabel: "Ver el sitio en inglés",
+    themeToLight: "Cambiar a modo claro",
+    themeToDark: "Cambiar a modo oscuro",
+    hero: { seeProjects: "Ver proyectos", write: "Escribirme", cv: "Descargar CV" },
+    map: {
+      title: "Mapa de mis sistemas",
+      desc: "Cuatro líneas, una por área de trabajo, que se cruzan en los proyectos donde se usan juntas.",
+      hint: "Cada línea es un área de trabajo. Las estaciones son proyectos.",
+      stations: "Estaciones",
+    },
+    about: { title: "Sobre mí" },
+    projects: {
+      title: "Proyectos",
+      intro: "Cuatro trabajos reales. Dos están en producción en empresas y no puedo mostrar su código; los otros dos son míos y están en GitHub.",
+      open: "Ver el caso",
+      confidential: "Confidencial",
+    },
+    stack: {
+      title: "Stack",
+      intro: "Cada tecnología aparece junto al lugar donde la usé. Si no la usé en algo real, no está en la lista.",
+      usedIn: "Usado en",
+    },
+    experience: { title: "Experiencia", education: "Formación" },
+    lab: { title: "Fuera de horario" },
+    contact: {
+      title: "¿Tienes un sistema que mantener o una app por construir?",
+      body: "Escríbeme con lo que necesitas. Respondo en español o en inglés.",
+      copy: "Copiar correo",
+      copied: "Correo copiado",
+      send: "Enviar un correo",
+    },
+    footer: { built: "Hecho con Next.js, Tailwind y GSAP.", source: "Código de este sitio" },
+    project: {
+      back: "Todos los proyectos",
+      problem: "El problema",
+      role: "Mi rol",
+      build: "Cómo está construido",
+      status: "Estado",
+      stack: "Stack",
+      links: "Enlaces",
+      next: "Siguiente proyecto",
+      lines: "Líneas",
+    },
+  },
+  en: {
+    nav: { projects: "Projects", stack: "Stack", experience: "Experience", contact: "Contact" },
+    skip: "Skip to content",
+    switchLang: "Español",
+    switchLangLabel: "View the site in Spanish",
+    themeToLight: "Switch to light mode",
+    themeToDark: "Switch to dark mode",
+    hero: { seeProjects: "See projects", write: "Get in touch", cv: "Download CV" },
+    map: {
+      title: "A map of my systems",
+      desc: "Four lines, one per area of work, crossing at the projects where they are used together.",
+      hint: "Each line is an area of work. The stations are projects.",
+      stations: "Stations",
+    },
+    about: { title: "About" },
+    projects: {
+      title: "Projects",
+      intro: "Four real pieces of work. Two run in production at companies and I can't show their code; the other two are mine and on GitHub.",
+      open: "Read the case",
+      confidential: "Confidential",
+    },
+    stack: {
+      title: "Stack",
+      intro: "Every technology sits next to the place I used it. If I haven't used it on something real, it isn't on the list.",
+      usedIn: "Used in",
+    },
+    experience: { title: "Experience", education: "Education" },
+    lab: { title: "Off the clock" },
+    contact: {
+      title: "Have a system to maintain or an app to build?",
+      body: "Write to me with what you need. I reply in Spanish or English.",
+      copy: "Copy email",
+      copied: "Email copied",
+      send: "Send an email",
+    },
+    footer: { built: "Built with Next.js, Tailwind and GSAP.", source: "Source for this site" },
+    project: {
+      back: "All projects",
+      problem: "The problem",
+      role: "My role",
+      build: "How it's built",
+      status: "Status",
+      stack: "Stack",
+      links: "Links",
+      next: "Next project",
+      lines: "Lines",
+    },
+  },
+} as const;
+
+export type Dictionary = (typeof ui)[Locale];
+
+export const paths = {
+  home: (l: Locale) => (l === "es" ? "/" : "/en/"),
+  project: (l: Locale, slug: string) => (l === "es" ? `/proyectos/${slug}/` : `/en/projects/${slug}/`),
+};

@@ -1,0 +1,6 @@
+import "../globals.css";
+import { SiteShell } from "@/components/site/site-shell";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <SiteShell lang="en">{children}</SiteShell>;
+}
