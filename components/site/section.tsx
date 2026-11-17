@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { RevealText } from "./reveal-text";
 
 interface SectionProps {
   id: string;
@@ -10,16 +11,16 @@ interface SectionProps {
 
 export function Section({ id, title, intro, className, children }: SectionProps) {
   return (
-    <section id={id} aria-labelledby={`${id}-titulo`} className={cn("border-t py-20 sm:py-28", className)}>
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <h2
+    <section id={id} aria-labelledby={`${id}-titulo`} className={cn("py-24 sm:py-32", className)}>
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <RevealText
           id={`${id}-titulo`}
-          className="type-semiwide text-[clamp(1.9rem,4vw,2.9rem)] font-extrabold leading-[1.05] tracking-tight"
+          className="type-wide text-[clamp(2.4rem,7vw,5.5rem)] font-extrabold leading-[0.95] tracking-[-0.03em]"
         >
           {title}
-        </h2>
-        {intro ? <p className="mt-4 max-w-[62ch] text-muted-foreground">{intro}</p> : null}
-        <div className="mt-12">{children}</div>
+        </RevealText>
+        {intro ? <p className="mt-6 max-w-[62ch] text-[1.1rem] text-muted-foreground">{intro}</p> : null}
+        <div className="mt-14">{children}</div>
       </div>
     </section>
   );

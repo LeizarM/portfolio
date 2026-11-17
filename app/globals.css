@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@fontsource-variable/archivo/wdth.css";
+@import "lenis/dist/lenis.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -30,6 +31,7 @@
   --line-mobile: #c2386a;
   --line-data: #1f7a55;
   --line-infra: #2b5fc2;
+  --on-line: #fafaf7;
   --radius: 0.5rem;
 }
 
@@ -54,6 +56,7 @@
   --line-mobile: #f29cb7;
   --line-data: #8fd6b4;
   --line-infra: #8db8f2;
+  --on-line: #13142b;
 }
 
 @theme inline {
@@ -77,6 +80,7 @@
   --color-line-mobile: var(--line-mobile);
   --color-line-data: var(--line-data);
   --color-line-infra: var(--line-infra);
+  --color-on-line: var(--on-line);
 
   --font-sans: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
 
@@ -107,10 +111,18 @@
 @utility type-narrow {
   font-stretch: 72%;
 }
+/* Texto en contorno para la banda de tecnologías. */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--muted-foreground);
+}
 
 @layer base {
   * {
     border-color: var(--border);
+  }
+  html.lenis {
+    scroll-behavior: auto;
   }
   html {
     scroll-behavior: smooth;

@@ -12,8 +12,8 @@ entrega, kardex. El sitio toma su lenguaje visual de ese mundo y no de una plant
 - Modo claro: tinta índigo sobre papel bond.
 - Acentos: los colores de las copias de una factura (canario, rosa, menta, celeste).
 
-**El elemento memorable es uno solo:** el mapa de líneas del inicio. Cada línea es un área de trabajo y
-cada estación es un proyecto donde esas áreas se cruzan. Todo lo demás es sobrio a propósito.
+**El motivo central** es el mapa de líneas: cada línea es un área de trabajo. Abre el sitio como video
+de fondo y sus colores vuelven en los bloques de proyecto y en el stack.
 
 ## Color
 
@@ -64,21 +64,32 @@ Reglas:
 
 ## Movimiento
 
+Esta versión es deliberadamente cinética: el movimiento es parte de la identidad.
+
 | Dónde | Qué | Con qué |
 |---|---|---|
-| Inicio | Las líneas del mapa se trazan una vez al cargar | GSAP (timeline) |
-| Stack | Cada línea se extiende al entrar en pantalla | GSAP ScrollTrigger |
+| Inicio, fondo | Video en bucle de las líneas trazándose, con trenes que las recorren | HyperFrames (fuente en `reel/`) |
+| Inicio, nombre | Las letras suben una a una desde una máscara | GSAP SplitText |
+| Inicio, frase | "Construyo…" rota entre cuatro frases | GSAP timeline |
+| Toda la página | Scroll suave | Lenis + GSAP ScrollTrigger |
+| Banda de tecnologías | Dos filas que aceleran y cambian de sentido con el scroll | Magic UI `scroll-based-velocity` |
+| Títulos de sección | Cada línea sube desde una máscara al entrar | GSAP SplitText |
+| Sobre mí | Las palabras se encienden con el scroll | GSAP SplitText + scrub |
+| Proyectos | La sección se fija y las tarjetas pasan en horizontal | GSAP ScrollTrigger (pin) |
+| Stack | Cada línea se extiende y sus paradas aparecen en cadena | GSAP ScrollTrigger |
 | Experiencia | La línea de tiempo se llena con el scroll | GSAP ScrollTrigger (scrub) |
-| Proyecto destacado | Un haz recorre el borde de la tarjeta | Magic UI `border-beam` |
-| Fuera de horario | Cinta de herramientas | Magic UI `marquee` |
-| Páginas de caso | Entrada del encabezado | Magic UI `blur-fade` |
+| Puntero | Seguidor que crece y muestra "Ver" sobre los proyectos | GSAP quickTo |
+| Botones | Se atraen hacia el puntero | GSAP quickTo |
 | Cambio de tema | Revelado circular desde el botón | Magic UI `animated-theme-toggler` |
+| Fuera de horario | Cinta de herramientas | Magic UI `marquee` |
 
 Reglas:
 
-- No hay aparecer-y-deslizar en cada sección. Una animación orquestada por página.
-- Todo respeta `prefers-reduced-motion`: sin movimiento, el sitio se muestra en su estado final.
+- Todo respeta `prefers-reduced-motion`: sin movimiento, el video se reemplaza por una imagen fija y
+  el sitio se muestra en su estado final.
 - El contenido nunca depende de JavaScript para ser visible.
+- El scroll horizontal y el seguidor del puntero solo existen en escritorio.
+- Los proyectos son bloques de color pleno: cada uno toma el color de una de sus líneas.
 
 ## Voz
 

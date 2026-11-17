@@ -7,3 +7,11 @@ export const lineClass: Record<LineId, { stroke: string; bg: string; text: strin
   data: { stroke: "stroke-line-data", bg: "bg-line-data", text: "text-line-data", border: "border-line-data" },
   infra: { stroke: "stroke-line-infra", bg: "bg-line-infra", text: "text-line-infra", border: "border-line-infra" },
 };
+
+/** Bloque de color pleno de cada línea, con su texto encima. */
+export const blockClass: Record<LineId, string> = {
+  backend: "bg-line-backend text-on-line",
+  mobile: "bg-line-mobile text-on-line",
+  data: "bg-line-data text-on-line",
+  infra: "bg-line-infra text-on-line",
+};

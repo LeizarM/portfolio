@@ -15,7 +15,7 @@ export function Header({ lang, altHref }: { lang: Locale; altHref: string }) {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-5 sm:px-8">
         <Link href={home} className="type-wide text-[0.95rem] font-extrabold tracking-tight">
           {site.shortName}
         </Link>

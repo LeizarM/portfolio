@@ -30,6 +30,8 @@ export interface Project {
   kind: Localized;
   summary: Localized;
   lines: LineId[];
+  /** Color del bloque del proyecto: una de sus líneas. */
+  accent: LineId;
   stack: string[];
   /** Proyectos de empresa: sin nombre, sin capturas, sin repositorio. */
   confidential: boolean;
@@ -62,6 +64,7 @@ export const site = {
 };
 
 export const hero = {
+  lead: { es: "Construyo", en: "I build" },
   role: {
     es: "Desarrollador backend y móvil",
     en: "Backend and mobile developer",
@@ -71,6 +74,14 @@ export const hero = {
     en: "I build and run the software a company uses to sell, produce and collect: the ERP, the Java services, the Flutter apps and the network underneath.",
   },
 } satisfies Record<string, Localized>;
+
+/** Frases que rotan en el inicio, después de "Construyo". */
+export const heroRotating: LocalizedList = {
+  es: ["servicios en Java y Quarkus", "apps en Flutter", "módulos sobre SAP Business One", "la red que lo sostiene todo"],
+  en: ["services in Java and Quarkus", "apps in Flutter", "modules on SAP Business One", "the network that holds it all"],
+};
+
+export const band: string[] = ["Java", "Spring Boot", "Quarkus", "Flutter", "SQL Server", "SAP Business One"];
 
 export const about = {
   paragraphs: {
@@ -160,6 +171,7 @@ export const projects: Project[] = [
       en: "The system that wraps SAP Business One at a distribution company: pricing, collections and production in one place.",
     },
     lines: ["backend", "mobile", "data", "infra"],
+    accent: "backend",
     stack: ["Java", "Spring Boot", "SQL Server", "T-SQL", "SAP Business One", "Flutter", "Riverpod"],
     confidential: true,
     problem: {
@@ -201,6 +213,7 @@ export const projects: Project[] = [
       en: "A sales and inventory system with a Quarkus backend and a Flutter app: customers, pricing, discounts and delivery notes.",
     },
     lines: ["backend", "mobile", "data"],
+    accent: "mobile",
     stack: ["Java 21", "Quarkus 3", "PostgreSQL", "JWT", "Flutter"],
     confidential: false,
     problem: {
@@ -247,6 +260,7 @@ export const projects: Project[] = [
       en: "A World Cup pool app with its own backend and a deployment I set up end to end on a Fedora server.",
     },
     lines: ["mobile", "backend", "infra"],
+    accent: "infra",
     stack: ["React Native", "Expo", "NestJS", "Prisma", "PostgreSQL", "Docker", "Nginx", "CrowdSec", "GitHub Actions"],
     confidential: false,
     problem: {
@@ -297,6 +311,7 @@ export const projects: Project[] = [
       en: "Stored procedures and triggers that stop a badly entered document from reaching the books.",
     },
     lines: ["data"],
+    accent: "data",
     stack: ["SQL Server", "T-SQL", "SAP Business One", "Crystal Reports"],
     confidential: true,
     problem: {

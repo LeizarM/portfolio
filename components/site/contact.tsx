@@ -1,8 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 import { site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
-import { Button } from "@/components/ui/button";
 import { CopyEmail } from "./copy-email";
+import { Magnetic } from "./magnetic";
+import { RevealText } from "./reveal-text";
 
 export function Contact({ lang }: { lang: Locale }) {
   const t = ui[lang].contact;
@@ -12,21 +13,30 @@ export function Contact({ lang }: { lang: Locale }) {
   ];
 
   return (
-    <section id="contacto" aria-labelledby="contacto-titulo" className="border-t py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <h2
+    <section
+      id="contacto"
+      aria-labelledby="contacto-titulo"
+      className="bg-primary py-28 text-primary-foreground sm:py-40"
+    >
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <RevealText
           id="contacto-titulo"
-          className="type-wide max-w-[18ch] text-[clamp(2rem,5.4vw,3.6rem)] font-extrabold leading-[1.02] tracking-[-0.02em]"
+          className="type-wide max-w-[16ch] text-[clamp(2.3rem,7.4vw,6.4rem)] font-extrabold leading-[0.92] tracking-[-0.035em]"
         >
           {t.title}
-        </h2>
-        <p className="mt-6 max-w-[52ch] text-[1.15rem] text-muted-foreground">{t.body}</p>
-        <p className="mt-8 break-all text-[1.25rem] font-semibold">{site.email}</p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <CopyEmail email={site.email} label={t.copy} done={t.copied} />
-          <Button asChild size="lg" variant="outline" className="h-12 px-6 text-base font-semibold">
-            <a href={`mailto:${site.email}`}>{t.send}</a>
-          </Button>
+        </RevealText>
+        <p className="mt-8 max-w-[52ch] text-[1.2rem] opacity-85">{t.body}</p>
+        <a
+          href={`mailto:${site.email}`}
+          data-cursor={lang === "es" ? "Escribir" : "Write"}
+          className="type-semiwide mt-10 inline-block break-all text-[clamp(1.2rem,3.6vw,2.8rem)] font-extrabold underline decoration-2 underline-offset-[0.25em]"
+        >
+          {site.email}
+        </a>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Magnetic>
+            <CopyEmail email={site.email} label={t.copy} done={t.copied} />
+          </Magnetic>
         </div>
         <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-2">
           {links.map((link) => (
@@ -35,7 +45,7 @@ export function Contact({ lang }: { lang: Locale }) {
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex min-h-11 items-center gap-1.5 text-[1.1rem] font-semibold underline decoration-border decoration-2 underline-offset-[6px] hover:decoration-foreground"
+                className="group inline-flex min-h-11 items-center gap-1.5 text-[1.1rem] font-semibold underline decoration-current/40 decoration-2 underline-offset-[6px] hover:decoration-current"
               >
                 {link.label}
                 <ArrowUpRight aria-hidden className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

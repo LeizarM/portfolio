@@ -1,122 +1,128 @@
+"use client";
+
+import { useRef } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Lock } from "lucide-react";
-import { projects, type Locale, type Project } from "@/lib/content";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { getLine, projects, type Locale, type Project } from "@/lib/content";
 import { paths, ui } from "@/lib/i18n";
-import { lineClass } from "@/lib/lines";
+import { blockClass } from "@/lib/lines";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { BorderBeam } from "@/components/magicui/border-beam";
-import { Section } from "./section";
+import { RevealText } from "./reveal-text";
 
-function ProjectCard({
-  project,
-  lang,
-  featured,
-  last,
-}: {
-  project: Project;
-  lang: Locale;
-  featured?: boolean;
-  last?: boolean;
-}) {
-  const t = ui[lang].projects;
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+function ProjectCard({ project, lang }: { project: Project; lang: Locale }) {
+  const t = ui[lang];
   return (
-    <li className={cn(featured && "col-span-full", last && "md:max-lg:col-span-2")}>
+    <li className="shrink-0">
       <Link
         href={paths.project(lang, project.slug)}
-        className="group relative flex h-full flex-col rounded-lg border bg-card p-6 transition-colors hover:border-foreground sm:p-8"
+        data-cursor={t.cursor}
+        className={cn(
+          "group flex h-full min-h-[26rem] flex-col justify-between rounded-3xl p-7 sm:p-10 lg:h-[62vh] lg:min-h-[27rem] lg:w-[min(62vw,58rem)]",
+          blockClass[project.accent],
+        )}
       >
-        <div aria-hidden className="flex gap-1.5">
-          {project.lines.map((id) => (
-            <span
-              key={id}
-              className={cn(
-                "h-1.5 w-7 rounded-full transition-[width] duration-300 ease-out group-hover:w-12",
-                lineClass[id].bg,
-              )}
-            />
-          ))}
+        <div>
+          <p className="type-narrow flex flex-wrap items-center gap-x-3 text-[1.05rem] font-semibold opacity-80">
+            {project.kind[lang]}
+            {project.confidential ? (
+              <span className="inline-flex items-center gap-1">
+                <Lock aria-hidden className="size-3.5" />
+                {t.projects.confidential}
+              </span>
+            ) : null}
+          </p>
+          <h3 className="type-wide mt-4 max-w-[16ch] text-[clamp(1.9rem,4.4vw,4rem)] font-extrabold leading-[0.95] tracking-[-0.03em]">
+            {project.title[lang]}
+          </h3>
+          <p className="mt-5 max-w-[48ch] text-[1.1rem] leading-relaxed opacity-90">{project.summary[lang]}</p>
         </div>
 
-        <div className={cn(featured && "lg:grid lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] lg:gap-14")}>
-          <div>
-            <p className="type-narrow mt-6 flex items-center gap-2 text-[0.95rem] font-semibold text-muted-foreground">
-              {project.kind[lang]}
-              {project.confidential ? (
-                <span className="inline-flex items-center gap-1">
-                  <Lock aria-hidden className="size-3.5" />
-                  {t.confidential}
-                </span>
-              ) : null}
-            </p>
-            <h3
-              className={cn(
-                "type-semiwide mt-2 font-extrabold leading-tight tracking-tight",
-                featured ? "text-[clamp(1.6rem,3vw,2.2rem)]" : "text-[1.45rem]",
-              )}
-            >
-              {project.title[lang]}
-            </h3>
-            <p className={cn("mt-3 text-muted-foreground", featured ? "max-w-[60ch]" : "max-w-[46ch]")}>
-              {project.summary[lang]}
-            </p>
-
-            <ul className="mt-6 flex flex-wrap gap-1.5">
-              {project.stack.map((tech) => (
-                <li key={tech}>
-                  <Badge variant="outline" className="rounded-md px-2 py-1 text-[0.8rem] font-medium">
-                    {tech}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {featured ? (
-            <ul className="mt-8 hidden space-y-3 border-l pl-8 lg:mt-6 lg:block">
-              {project.build[lang].slice(1, 4).map((item) => (
-                <li key={item} className="relative pl-7 text-[0.98rem] text-muted-foreground">
-                  <span
-                    aria-hidden
-                    className="absolute left-0 top-[0.5em] size-3 rounded-full border-[3px] border-foreground"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-
-        <span className="mt-8 inline-flex items-center gap-1.5 pt-2 font-semibold">
-          {t.open}
-          <ArrowUpRight
+        <div className="mt-8 flex items-end justify-between gap-6">
+          <ul className="flex flex-wrap gap-1.5">
+            {project.stack.map((tech) => (
+              <li
+                key={tech}
+                className="rounded-full border border-current/40 px-3 py-1 text-[0.85rem] font-semibold"
+              >
+                {tech}
+              </li>
+            ))}
+          </ul>
+          <span
             aria-hidden
-            className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          />
+            className="flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-current transition-transform duration-500 ease-out group-hover:rotate-45 sm:size-16"
+          >
+            <ArrowUpRight className="size-6" />
+          </span>
+        </div>
+        <span className="sr-only">
+          {t.projects.open}. {project.lines.map((id) => getLine(id).name[lang]).join(", ")}.
         </span>
-
-        {featured ? (
-          <BorderBeam
-            size={140}
-            duration={9}
-            borderWidth={2}
-            colorFrom="var(--line-backend)"
-            colorTo="var(--line-mobile)"
-          />
-        ) : null}
       </Link>
     </li>
   );
 }
 
+/** En escritorio la sección se fija y los proyectos pasan en horizontal con el scroll. */
 export function Projects({ lang }: { lang: Locale }) {
+  const root = useRef<HTMLElement>(null);
   const t = ui[lang].projects;
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
+        const track = root.current?.querySelector<HTMLElement>(".hs-track");
+        const pin = root.current?.querySelector<HTMLElement>(".hs-pin");
+        if (!track || !pin) return;
+        const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
+        const st = {
+          trigger: pin,
+          start: "top top",
+          end: () => `+=${distance()}`,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+        };
+        gsap.to(track, { x: () => -distance(), ease: "none", scrollTrigger: { ...st, pin: true } });
+        gsap.fromTo(".hs-progress", { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: st });
+      });
+      return () => mm.revert();
+    },
+    { scope: root },
+  );
+
   return (
-    <Section id="proyectos" title={t.title} intro={t.intro}>
-      <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, i) => (
-          <ProjectCard key={project.slug} project={project} lang={lang} featured={i === 0} last={i === projects.length - 1} />
-        ))}
-      </ul>
-    </Section>
+    <section ref={root} id="proyectos" aria-labelledby="proyectos-titulo" className="overflow-hidden">
+      <div className="hs-pin flex flex-col justify-center py-24 lg:h-screen lg:py-0">
+        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <RevealText
+              id="proyectos-titulo"
+              className="type-wide text-[clamp(2.4rem,6vw,4.6rem)] font-extrabold leading-[0.95] tracking-[-0.03em]"
+            >
+              {t.title}
+            </RevealText>
+            <p className="max-w-[46ch] text-muted-foreground lg:text-right">{t.intro}</p>
+          </div>
+        </div>
+
+        <ul className="hs-track mt-10 flex flex-col gap-5 px-5 sm:px-8 lg:w-max lg:flex-row lg:gap-6 lg:px-[max(2rem,calc((100vw-80rem)/2+2rem))]">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} lang={lang} />
+          ))}
+        </ul>
+
+        <div aria-hidden className="mx-auto mt-8 hidden w-full max-w-7xl px-8 lg:block">
+          <div className="h-1 overflow-hidden rounded-full bg-border">
+            <div className="hs-progress h-full origin-left bg-foreground" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

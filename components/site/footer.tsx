@@ -5,7 +5,7 @@ export function Footer({ lang }: { lang: Locale }) {
   const t = ui[lang];
   return (
     <footer className="border-t">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 text-[0.95rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-8 text-[0.95rem] text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-8">
         <p>
           {site.name}, {new Date().getFullYear()}. {t.footer.built}
         </p>

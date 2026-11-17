@@ -21,13 +21,31 @@ export function Stack({ lang }: { lang: Locale }) {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference) and (min-width: 768px)", () => {
-        gsap.utils.toArray<HTMLElement>(".stack-track").forEach((track) => {
-          gsap.from(track, {
+        gsap.utils.toArray<HTMLElement>(".stack-row").forEach((row) => {
+          const st = { trigger: row, start: "top 82%", once: true };
+          gsap.from(row.querySelector(".stack-track"), {
             scaleX: 0,
             transformOrigin: "left center",
-            duration: 0.9,
+            duration: 1.1,
+            ease: "power3.inOut",
+            scrollTrigger: st,
+          });
+          gsap.from(row.querySelectorAll(".stack-dot"), {
+            scale: 0,
+            duration: 0.45,
+            ease: "back.out(2.4)",
+            stagger: 0.12,
+            delay: 0.25,
+            scrollTrigger: st,
+          });
+          gsap.from(row.querySelectorAll(".stack-item"), {
+            y: 18,
+            autoAlpha: 0,
+            duration: 0.6,
             ease: "power3.out",
-            scrollTrigger: { trigger: track, start: "top 85%", once: true },
+            stagger: 0.12,
+            delay: 0.35,
+            scrollTrigger: st,
           });
         });
       });
@@ -42,11 +60,11 @@ export function Stack({ lang }: { lang: Locale }) {
         {lines.map((line) => (
           <div key={line.id} id={`linea-${line.id}`} className="scroll-mt-24">
             <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-5">
-              <h3 className="type-semiwide text-[1.35rem] font-extrabold">{line.name[lang]}</h3>
+              <h3 className="type-wide text-[clamp(1.5rem,2.6vw,2.1rem)] font-extrabold tracking-tight">{line.name[lang]}</h3>
               <p className="text-muted-foreground">{line.summary[lang]}</p>
             </div>
 
-            <div className="relative mt-7">
+            <div className="stack-row relative mt-7">
               <span
                 aria-hidden
                 className={cn(
@@ -59,13 +77,15 @@ export function Stack({ lang }: { lang: Locale }) {
                   <li key={tech.name} className="relative pl-9 md:pl-0 md:pt-9">
                     <span
                       aria-hidden
-                      className="absolute left-0 top-1 size-5 rounded-full border-4 border-foreground bg-background md:top-0"
+                      className="stack-dot absolute left-0 top-1 size-5 rounded-full border-4 border-foreground bg-background md:top-0"
                     />
-                    <p className="font-bold leading-snug">{tech.name}</p>
-                    <p className="mt-1 text-[0.95rem] leading-snug text-muted-foreground">
-                      <span className="sr-only">{t.usedIn}: </span>
-                      {tech.usedIn[lang]}
-                    </p>
+                    <div className="stack-item">
+                      <p className="font-bold leading-snug">{tech.name}</p>
+                      <p className="mt-1 text-[0.95rem] leading-snug text-muted-foreground">
+                        <span className="sr-only">{t.usedIn}: </span>
+                        {tech.usedIn[lang]}
+                      </p>
+                    </div>
                   </li>
                 ))}
               </ul>

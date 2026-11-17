@@ -1,7 +1,7 @@
 # Portafolio de Marcelo Javier Jaimes
 
 Sitio personal en español e inglés. Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4,
-shadcn/ui, Magic UI, GSAP y Lucide.
+shadcn/ui, Magic UI, GSAP, Lenis, HyperFrames y Lucide.
 
 ## Verlo en local
 
@@ -24,6 +24,24 @@ Todo el contenido está en dos archivos; no hace falta tocar componentes.
 
 Para activar el botón "Descargar CV", copia el PDF a `public/` y pon su ruta en `site.cv`
 dentro de `lib/content.ts`.
+
+## Video del inicio
+
+El video de fondo se genera con [HyperFrames](https://github.com/heygen-com/hyperframes) a partir de
+`reel/index.html` (HTML + GSAP). Requiere Node.js 22 y FFmpeg.
+
+```bash
+cd reel
+npm run dev      # vista previa
+npm run render   # genera el MP4
+```
+
+Después se codifica para web y se copia a `public/media/`:
+
+```bash
+ffmpeg -i renders/*.mp4 -vf scale=1600:900 -an -c:v libx264 -crf 27 -movflags +faststart ../public/media/hero.mp4
+ffmpeg -i renders/*.mp4 -vf scale=1600:900 -an -c:v libvpx-vp9 -crf 38 -b:v 0 ../public/media/hero.webm
+```
 
 ## Publicación
 

@@ -18,7 +18,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
   return (
     <>
       <Header lang={lang} altHref={paths.project(other, project.slug)} />
-      <main id="contenido" className="mx-auto max-w-6xl px-5 pb-24 pt-10 sm:px-8 sm:pt-14">
+      <main id="contenido" className="mx-auto max-w-7xl px-5 pb-24 pt-10 sm:px-8 sm:pt-14">
         <Link
           href={`${paths.home(lang)}#proyectos`}
           className="inline-flex min-h-11 items-center gap-2 font-semibold text-muted-foreground hover:text-foreground"

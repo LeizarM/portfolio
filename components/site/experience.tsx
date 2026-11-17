@@ -28,6 +28,15 @@ export function Experience({ lang }: { lang: Locale }) {
             scrollTrigger: { trigger: ".exp-list", start: "top 70%", end: "bottom 60%", scrub: 0.4 },
           },
         );
+        gsap.utils.toArray<HTMLElement>(".exp-job").forEach((job) => {
+          gsap.from(job, {
+            y: 40,
+            autoAlpha: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: { trigger: job, start: "top 85%", once: true },
+          });
+        });
       });
       return () => mm.revert();
     },
@@ -42,7 +51,7 @@ export function Experience({ lang }: { lang: Locale }) {
           <span aria-hidden className="exp-progress absolute left-[7px] top-2 h-[calc(100%-1rem)] w-0.5 bg-line-backend" />
           <ol className="space-y-14">
             {jobs.map((job) => (
-              <li key={job.company} className="relative grid gap-x-10 gap-y-3 pl-10 lg:grid-cols-[15rem_minmax(0,1fr)]">
+              <li key={job.company} className="exp-job relative grid gap-x-10 gap-y-3 pl-10 lg:grid-cols-[15rem_minmax(0,1fr)]">
                 <span
                   aria-hidden
                   className="absolute left-0 top-1.5 size-4 rounded-full border-[3px] border-foreground bg-background"
@@ -53,7 +62,7 @@ export function Experience({ lang }: { lang: Locale }) {
                   {job.place}
                 </p>
                 <div>
-                  <h3 className="type-semiwide text-[1.45rem] font-extrabold leading-tight">{job.company}</h3>
+                  <h3 className="type-wide text-[clamp(1.5rem,3vw,2.4rem)] font-extrabold leading-tight tracking-tight">{job.company}</h3>
                   <p className="mt-1 font-semibold">{job.role[lang]}</p>
                   <p className="mt-3 max-w-[62ch] text-muted-foreground">{job.summary[lang]}</p>
                   {job.points[lang].length > 0 ? (
