@@ -5,15 +5,29 @@ import { TamaTrigger } from "./tama";
 
 export function Footer({ lang }: { lang: Locale }) {
   const t = ui[lang];
+  const areas =
+    lang === "es"
+      ? ["Backend", "Móvil", "Datos", "Infraestructura"]
+      : ["Backend", "Mobile", "Data", "Infrastructure"];
   return (
     <footer>
-      <div aria-hidden className="overflow-hidden pb-10">
+      <div aria-hidden className="overflow-hidden pb-12 pt-4">
         <ScrollVelocity
-          texts={[site.name, "Backend  Mobile  ERP  Infra"]}
+          texts={[
+            <span key="name" className="px-[0.18em]">
+              {site.name}
+            </span>,
+            <span key="areas" className="inline-flex gap-[0.45em] px-[0.22em]">
+              {areas.map((area) => (
+                <span key={area}>{area}</span>
+              ))}
+            </span>,
+          ]}
           velocity={55}
           fadeEdges
           outlineAlternate
-          className="text-[clamp(3rem,10vw,8rem)] font-semibold tracking-[-0.05em] text-foreground/90"
+          className="text-foreground/90"
+          scrollerClassName="!text-[clamp(2.6rem,9vw,7.5rem)] !font-semibold !leading-[1.14] !tracking-[-0.05em] md:!leading-[1.14]"
         />
       </div>
       <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-8 label-mono sm:flex-row sm:items-center sm:justify-between sm:px-8">
