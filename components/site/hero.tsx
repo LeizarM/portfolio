@@ -150,15 +150,6 @@ export function Hero({ lang }: { lang: Locale }) {
 
         <HeroPanel label={t.hero.place} />
 
-        <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-9 lg:gap-x-4">
-          {t.regions.map(([department, symbol]) => (
-            <li key={department} className="border-t pt-2">
-              <p className="text-[0.95rem] font-semibold">{department}</p>
-              <p className="label-mono !text-[0.72rem] leading-snug">{symbol}</p>
-            </li>
-          ))}
-        </ul>
-
         <div className="mt-12">
           <LogoLoop
             logos={band.map((item) => ({
