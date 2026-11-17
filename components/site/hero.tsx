@@ -15,7 +15,7 @@ import RotatingText from "@/components/reactbits/RotatingText";
 import ShinyText from "@/components/reactbits/ShinyText";
 import StarBorder from "@/components/reactbits/StarBorder";
 import { Button } from "@/components/ui/button";
-import { BoliviaOverlay } from "./bolivia-overlay";
+import { HeroPanel } from "./hero-panel";
 import { NatureScene } from "./nature-scene";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -148,13 +148,7 @@ export function Hero({ lang }: { lang: Locale }) {
           </div>
         </div>
 
-        <div className="hero-panel relative mt-14 aspect-[16/11] overflow-hidden rounded-[1.75rem] border sm:aspect-[16/8]">
-          <NatureScene className="absolute inset-0" />
-          <BoliviaOverlay />
-          <p className="label-mono absolute left-5 top-5 rounded-full bg-black/35 px-3 py-1.5 !text-white backdrop-blur-md">
-            {t.hero.place}
-          </p>
-        </div>
+        <HeroPanel label={t.hero.place} />
 
         <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3 lg:grid-cols-9 lg:gap-x-4">
           {t.regions.map(([department, symbol]) => (
