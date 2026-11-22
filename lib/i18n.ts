@@ -9,7 +9,7 @@ export const ui = {
     switchLangLabel: "Ver el sitio en inglés",
     themeToLight: "Cambiar a modo claro",
     themeToDark: "Cambiar a modo oscuro",
-    hero: { seeProjects: "Ver proyectos", write: "Escribirme", cv: "Descargar CV", scroll: "Desliza", place: "Bolivia, de los Andes a la Amazonía" },
+    hero: { seeProjects: "Ver proyectos", write: "Escribirme", cv: "Descargar CV", scroll: "Desliza" },
     cursor: "Ver",
     map: {
       title: "Mapa de mis sistemas",
@@ -63,7 +63,7 @@ export const ui = {
     switchLangLabel: "View the site in Spanish",
     themeToLight: "Switch to light mode",
     themeToDark: "Switch to dark mode",
-    hero: { seeProjects: "See projects", write: "Get in touch", cv: "Download CV", scroll: "Scroll", place: "Bolivia, from the Andes to the Amazon" },
+    hero: { seeProjects: "See projects", write: "Get in touch", cv: "Download CV", scroll: "Scroll" },
     cursor: "View",
     map: {
       title: "A map of my systems",

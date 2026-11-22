@@ -15,7 +15,6 @@ import RotatingText from "@/components/reactbits/RotatingText";
 import ShinyText from "@/components/reactbits/ShinyText";
 import StarBorder from "@/components/reactbits/StarBorder";
 import { Button } from "@/components/ui/button";
-import { HeroPanel } from "./hero-panel";
 import { NatureScene } from "./nature-scene";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -52,16 +51,6 @@ export function Hero({ lang }: { lang: Locale }) {
           .from(".hero-word", { yPercent: 115, duration: 1.1, stagger: 0.05 }, 0.15)
           .from(".hero-capsule", { scaleX: 0, transformOrigin: "left center", duration: 1, ease: "expo.out" }, 0.45)
           .from(".hero-fade", { y: 24, autoAlpha: 0, duration: 0.8, stagger: 0.1 }, 0.9);
-        gsap.fromTo(
-          ".hero-panel",
-          { scale: 0.9, borderRadius: "3rem" },
-          {
-            scale: 1,
-            borderRadius: "1.75rem",
-            ease: "none",
-            scrollTrigger: { trigger: ".hero-panel", start: "top 95%", end: "top 30%", scrub: 0.5 },
-          },
-        );
       });
       return () => mm.revert();
     },
@@ -147,8 +136,6 @@ export function Hero({ lang }: { lang: Locale }) {
             ) : null}
           </div>
         </div>
-
-        <HeroPanel label={t.hero.place} />
 
         <div className="mt-12">
           <LogoLoop
