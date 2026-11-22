@@ -22,7 +22,7 @@ export function Contact({ lang }: { lang: Locale }) {
       <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border bg-card-solid px-6 py-20 text-center sm:px-12 sm:py-28">
         <div aria-hidden className="absolute inset-0 opacity-70">
           <Threads
-            color="#7c5cff"
+            color="#3ddcff"
             accentColor="#3ddcff"
             amplitude={1.1}
             lineCount={34}

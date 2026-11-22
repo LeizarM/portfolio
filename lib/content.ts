@@ -78,8 +78,8 @@ export const hero = {
     en: "Backend and mobile developer",
   },
   pitch: {
-    es: "Construyo y opero el software con el que una empresa vende, produce y cobra: el sistema que acompaña a SAP, los servicios en Java, las apps en Flutter y la red que los sostiene.",
-    en: "I build and run the software a company uses to sell, produce and collect: the system alongside SAP, the Java services, the Flutter apps and the network underneath.",
+    es: "El sistema que acompaña a SAP, los servicios en Java, las apps en Flutter y la red que los sostiene.",
+    en: "The system alongside SAP, the Java services, the Flutter apps and the network underneath.",
   },
 };
 

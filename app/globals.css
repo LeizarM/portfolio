@@ -20,7 +20,7 @@
   --muted-foreground: #5b5d6b;
   --border: #0b0b101f;
   --input: #0b0b101f;
-  --ring: #5b3df5;
+  --ring: #0b7ea6;
   --primary: #0b0b10;
   --primary-foreground: #f5f5f8;
   --secondary: #ebebf0;
@@ -28,9 +28,9 @@
   --accent: #0b0b100d;
   --accent-foreground: #0b0b10;
   --destructive: #b3261e;
-  --glow-a: #6a4dff;
-  --glow-b: #12a8dc;
-  --glow-c: #e63b8f;
+  --glow-a: #0b7ea6;
+  --glow-b: #0b7ea6;
+  --glow-c: #0b7ea6;
   --line-backend: #5b3df5;
   --line-mobile: #d6257f;
   --line-data: #0a8f63;
@@ -57,7 +57,7 @@
   --muted-foreground: #8f919d;
   --border: #ffffff1a;
   --input: #ffffff1a;
-  --ring: #9b85ff;
+  --ring: #3ddcff;
   --primary: #ededf0;
   --primary-foreground: #050507;
   --secondary: #ffffff14;
@@ -65,9 +65,9 @@
   --accent: #ffffff12;
   --accent-foreground: #ededf0;
   --destructive: #ff8a80;
-  --glow-a: #7c5cff;
+  --glow-a: #3ddcff;
   --glow-b: #3ddcff;
-  --glow-c: #ff5caa;
+  --glow-c: #3ddcff;
   --line-backend: #9b85ff;
   --line-mobile: #ff7dbb;
   --line-data: #4fe0b0;
@@ -132,9 +132,9 @@
     30%, 60% { background-position: calc(100% + var(--shiny-width)) 0; }
   }
   @keyframes flow {
-    0% { left: -8%; opacity: 0; }
+    0% { transform: translateX(-8cqw); opacity: 0; }
     15%, 85% { opacity: 1; }
-    100% { left: 100%; opacity: 0; }
+    100% { transform: translateX(100cqw); opacity: 0; }
   }
   @keyframes aurora {
     from { transform: translate3d(-6%, -4%, 0) rotate(0deg) scale(1); }
@@ -180,19 +180,14 @@
   box-shadow: inset 0 1px 0 0 color-mix(in srgb, var(--foreground) 7%, transparent);
 }
 
-/* Título con la luz de las tres fuentes. */
+/* Título principal: tinta sólida, sin degradado. */
 @utility text-glow {
-  background: linear-gradient(100deg, var(--foreground) 20%, var(--glow-a) 55%, var(--glow-b) 80%, var(--glow-c));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--foreground);
 }
 
-/* Etiqueta pequeña en monoespaciada. */
+/* Etiqueta pequeña: la tipografía del texto, un paso más chica. */
 @utility label-mono {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
+  font-size: 0.9rem;
   color: var(--muted-foreground);
 }
 
@@ -204,11 +199,19 @@
     scroll-behavior: auto;
   }
   html {
+    overflow-x: clip;
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
   body {
+    overflow-x: clip;
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
@@ -222,10 +225,11 @@
     outline: 2px solid var(--ring);
     outline-offset: 3px;
     border-radius: 4px;
+    transition-property: none;
   }
   ::selection {
     background: var(--glow-a);
-    color: #ffffff;
+    color: var(--primary-foreground);
   }
 }
 
@@ -246,4 +250,199 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Pantalla de producto del inicio. Todo se mide en em sobre un tamaño atado al ancho del marco. */
+.demo {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  container-type: inline-size;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.75rem;
+  background: var(--card-solid);
+}
+.demo-stage {
+  position: absolute;
+  inset: 0;
+  font-size: 1.356cqw;
+  line-height: 1.2;
+}
+.demo-bar {
+  display: block;
+  height: 0.55em;
+  border-radius: 1em;
+  background: color-mix(in srgb, var(--foreground) 11%, transparent);
+}
+.demo-bar-strong { background: color-mix(in srgb, var(--foreground) 26%, transparent); }
+.demo-bar-tall { height: 1.1em; }
+.demo-bar-pill { height: 1.4em; width: 4.6em !important; }
+.demo-window {
+  position: absolute;
+  left: 5em;
+  top: 3.5em;
+  width: 51em;
+  height: 40em;
+  display: grid;
+  grid-template-columns: 12.5em minmax(0, 1fr);
+  border: 1px solid var(--border);
+  border-radius: 1em;
+  background: color-mix(in srgb, var(--foreground) 4%, var(--card-solid));
+  box-shadow: 0 2.5em 5em -1.5em color-mix(in srgb, var(--background) 80%, transparent);
+}
+.demo-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: 1.4em 1em;
+  border-right: 1px solid var(--border);
+}
+.demo-mark { width: 5.5em; height: 0.9em; margin: 0.2em 0.6em 1.4em; }
+.demo-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.6em;
+  border-radius: 0.6em;
+  font-size: 0.95em;
+  color: var(--muted-foreground);
+}
+.demo-nav-on {
+  background: color-mix(in srgb, var(--foreground) 9%, transparent);
+  color: var(--foreground);
+}
+.demo-ico {
+  flex: none;
+  width: 1.05em;
+  height: 1.05em;
+  border-radius: 0.3em;
+  background: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+.demo-nav-on .demo-ico { background: var(--glow-b); }
+.demo-nav .demo-bar { flex: none; }
+.demo-main { padding: 1.5em 1.8em; min-width: 0; }
+.demo-head { display: flex; align-items: center; gap: 0.7em; padding-bottom: 1.3em; }
+.demo-title { flex: 1; font-size: 1.5em; font-weight: 600; letter-spacing: -0.02em; }
+.demo-chip {
+  width: 5em;
+  height: 2em;
+  border-radius: 0.6em;
+  border: 1px solid var(--border);
+}
+.demo-list { position: relative; }
+.demo-row {
+  display: grid;
+  grid-template-columns: 4fr 3fr 7em;
+  align-items: center;
+  gap: 2em;
+  height: 3.3em;
+  border-top: 1px solid var(--border);
+}
+.demo-row-new { position: absolute; inset: 0 0 auto; }
+.demo-rest { transform: translateY(3.3em); }
+.demo-pill {
+  justify-self: start;
+  height: 1.7em;
+  overflow: hidden;
+  border-radius: 1em;
+  background: color-mix(in srgb, var(--foreground) 9%, transparent);
+  font-size: 0.82em;
+  font-weight: 500;
+}
+.demo-pill-roll { display: block; transform: translateY(-50%); }
+.demo-pill-roll > span {
+  display: flex;
+  align-items: center;
+  height: 1.7em;
+  padding: 0 0.85em;
+  white-space: nowrap;
+  color: var(--muted-foreground);
+}
+.demo-pill-roll > .demo-pill-done {
+  background: var(--glow-b);
+  color: var(--primary-foreground);
+}
+.demo-phone {
+  position: absolute;
+  left: 53em;
+  top: 8em;
+  width: 15em;
+  height: 32em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9em;
+  padding: 1.1em;
+  border: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent);
+  border-radius: 2.2em;
+  background: var(--background);
+  box-shadow: 0 2.5em 5em -1em color-mix(in srgb, var(--background) 90%, transparent);
+}
+.demo-phone-notch { align-self: center; width: 4.5em; height: 0.9em; margin-bottom: 0.4em; }
+.demo-phone-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  padding: 1em;
+  border: 1px solid var(--border);
+  border-radius: 1em;
+}
+.demo-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.9em;
+  border-radius: 1em;
+  background: var(--glow-b);
+  color: var(--primary-foreground);
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.demo-touch {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2.2em;
+  height: 2.2em;
+  margin: -1.1em;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--foreground) 55%, transparent);
+  opacity: 0;
+}
+@media (max-width: 40rem) {
+  .demo { aspect-ratio: 4 / 3; }
+  .demo-stage { font-size: 2.3cqw; }
+  .demo-window { left: 2em; top: 2em; }
+  .demo-phone { left: 27em; top: 6em; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .demo-row-new { animation: demo-row 11s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+  .demo-rest { animation: demo-rest 11s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+  .demo-pill-roll { animation: demo-pill 11s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+  .demo-button { animation: demo-press 11s ease-out infinite; }
+  .demo-touch { animation: demo-touch 11s ease-out infinite; }
+}
+@keyframes demo-touch {
+  0%, 7% { opacity: 0; transform: scale(1.5); }
+  10%, 13% { opacity: 1; transform: scale(1); }
+  17%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes demo-press {
+  0%, 9% { transform: scale(1); }
+  11%, 13% { transform: scale(0.96); }
+  16%, 100% { transform: scale(1); }
+}
+@keyframes demo-row {
+  0%, 15% { opacity: 0; transform: translateY(-45%); }
+  23%, 90% { opacity: 1; transform: translateY(0); }
+  96%, 100% { opacity: 0; transform: translateY(0); }
+}
+@keyframes demo-rest {
+  0%, 14% { transform: translateY(0); }
+  23%, 93% { transform: translateY(3.3em); }
+  100% { transform: translateY(0); }
+}
+@keyframes demo-pill {
+  0%, 42% { transform: translateY(0); }
+  48%, 100% { transform: translateY(-50%); }
 }

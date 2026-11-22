@@ -6,15 +6,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useTheme } from "next-themes";
-import { band, hero, heroRotating, site, type Locale } from "@/lib/content";
+import { hero, site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { asset } from "@/lib/utils";
-import LogoLoop from "@/components/reactbits/LogoLoop";
-import RotatingText from "@/components/reactbits/RotatingText";
-import ShinyText from "@/components/reactbits/ShinyText";
 import StarBorder from "@/components/reactbits/StarBorder";
 import { Button } from "@/components/ui/button";
 import { NatureScene } from "./nature-scene";
+import { ProductDemo } from "./product-demo";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -59,19 +57,9 @@ export function Hero({ lang }: { lang: Locale }) {
   return (
     <section ref={root} aria-label={site.name} className="relative px-5 pb-16 pt-32 sm:px-8 sm:pt-40">
       <div className="mx-auto max-w-7xl">
-        <p className="hero-fade glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.9rem]">
-          <ShinyText
-            text={site.name}
-            color={light ? "#5b5d6b" : "#a3a5b3"}
-            shineColor={light ? "#0b0b10" : "#ffffff"}
-            speed={3}
-          />
-          <span className="hidden text-muted-foreground sm:inline">{hero.role[lang]}</span>
-        </p>
-
         <h1
           aria-label={`${before} ${after}`}
-          className="mt-8 text-[clamp(2.6rem,8.4vw,8.25rem)] font-medium leading-[0.96] tracking-[-0.055em]"
+          className="text-[clamp(2.6rem,8.4vw,8.25rem)] font-medium leading-[0.96] tracking-[-0.055em]"
         >
           <span aria-hidden>
             <Words text={before} />
@@ -84,19 +72,7 @@ export function Hero({ lang }: { lang: Locale }) {
 
         <div className="mt-12 grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto]">
           <div>
-            <p className="hero-fade flex flex-wrap items-center gap-x-3 gap-y-2 text-[clamp(1.1rem,2vw,1.5rem)] font-medium">
-              <span className="text-muted-foreground">{heroRotating.lead[lang]}</span>
-              <RotatingText
-                texts={heroRotating.phrases[lang]}
-                rotationInterval={2600}
-                staggerDuration={0.018}
-                staggerFrom="last"
-                mainClassName="overflow-hidden rounded-xl bg-linear-to-r from-glow-a to-glow-b px-3 py-1 text-white"
-                splitLevelClassName="overflow-hidden"
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-              />
-            </p>
-            <p className="hero-fade mt-5 max-w-[54ch] text-[1.1rem] leading-relaxed text-muted-foreground">
+            <p className="hero-fade max-w-[54ch] text-[1.1rem] leading-relaxed text-muted-foreground">
               {hero.pitch[lang]}
             </p>
           </div>
@@ -106,7 +82,7 @@ export function Hero({ lang }: { lang: Locale }) {
               as="a"
               href="#proyectos"
               color="#3ddcff"
-              trailColor="#7c5cff"
+              trailColor="#3ddcff"
               duration={5}
               radius={999}
               theme={light ? "light" : "dark"}
@@ -132,20 +108,7 @@ export function Hero({ lang }: { lang: Locale }) {
           </div>
         </div>
 
-        <div className="mt-12">
-          <LogoLoop
-            logos={band.map((item) => ({
-              node: <span className="font-mono text-[0.9rem] text-muted-foreground">{item}</span>,
-              title: item,
-            }))}
-            speed={45}
-            gap={44}
-            logoHeight={22}
-            fadeOut
-            fadeOutColor="var(--background)"
-            ariaLabel="Stack"
-          />
-        </div>
+        <ProductDemo lang={lang} />
       </div>
     </section>
   );

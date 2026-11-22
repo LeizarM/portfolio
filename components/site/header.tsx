@@ -19,7 +19,7 @@ export function Header({ lang, altHref }: { lang: Locale; altHref: string }) {
         <Link href={home} className="flex items-center gap-2.5 font-semibold tracking-tight">
           <span
             aria-hidden
-            className="size-2.5 rounded-full bg-linear-to-br from-glow-a via-glow-b to-glow-c shadow-[0_0_12px_var(--glow-a)]"
+            className="size-2.5 rounded-full bg-glow-b"
           />
           {site.shortName}
         </Link>

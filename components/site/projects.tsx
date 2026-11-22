@@ -15,11 +15,11 @@ function Flow({ project, label }: { project: Project; label: string }) {
   return (
     <div>
       <p className="label-mono">{label}</p>
-      <ol className="relative mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-0">
+      <ol className="relative mt-4 flex [container-type:inline-size] flex-col gap-3 sm:flex-row sm:items-center sm:gap-0">
         <span aria-hidden className="absolute inset-x-0 top-1/2 hidden h-px bg-border sm:block" />
         <span
           aria-hidden
-          className="animate-flow absolute top-1/2 hidden h-[5px] w-16 -translate-y-1/2 rounded-full blur-[2px] sm:block"
+          className="animate-flow absolute left-0 top-1/2 hidden h-[5px] w-16 -translate-y-1/2 rounded-full blur-[2px] sm:block"
           style={{ background: `linear-gradient(to right, transparent, ${color})` }}
         />
         {project.flow.map((node, i) => (
@@ -78,7 +78,7 @@ function ProjectRow({
           <span className="label-mono hidden max-w-[16rem] text-right lg:block">{project.kind[lang]}</span>
           <span
             className={cn(
-              "flex size-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 sm:size-14",
+              "flex size-11 shrink-0 items-center justify-center rounded-full border transition-[rotate,background-color,color] duration-300 sm:size-14",
               open ? "rotate-45 bg-foreground text-background" : "group-hover/row:bg-accent",
             )}
           >
