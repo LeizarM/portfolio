@@ -168,8 +168,8 @@ export const projects: Project[] = [
     short: { es: "Apoyo SAP", en: "SAP support" },
     kind: { es: "Sistema de empresa, en producción", en: "Company system, in production" },
     summary: {
-      es: "El sistema que acompaña a SAP Business One en una empresa de distribución. No reemplaza al ERP: cubre precios, cobranza y producción, que SAP no resolvía.",
-      en: "The system that sits alongside SAP Business One at a distribution company. It doesn't replace the ERP: it covers pricing, collections and production, which SAP didn't handle.",
+      es: "El sistema que acompaña a SAP Business One en una empresa de distribución. No reemplaza al ERP. Cubre precios, cobranza y producción, que SAP no resolvía.",
+      en: "The system that sits alongside SAP Business One at a distribution company. It doesn't replace the ERP. It covers pricing, collections and production, which SAP didn't handle.",
     },
     lines: ["backend", "mobile", "data", "infra"],
     accent: "backend",

@@ -2,7 +2,6 @@
 
 import { useRef, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -61,7 +60,6 @@ export function Hero({ lang }: { lang: Locale }) {
     <section ref={root} aria-label={site.name} className="relative px-5 pb-16 pt-32 sm:px-8 sm:pt-40">
       <div className="mx-auto max-w-7xl">
         <p className="hero-fade glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[0.9rem]">
-          <span aria-hidden className="size-1.5 rounded-full bg-line-data shadow-[0_0_8px_var(--line-data)]" />
           <ShinyText
             text={site.name}
             color={light ? "#5b5d6b" : "#a3a5b3"}
@@ -114,10 +112,7 @@ export function Hero({ lang }: { lang: Locale }) {
               theme={light ? "light" : "dark"}
               className="group h-13 px-7 text-base font-semibold"
             >
-              <span className="inline-flex items-center gap-2">
-                {t.hero.seeProjects}
-                <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />
-              </span>
+              {t.hero.seeProjects}
             </StarBorder>
             <Button
               asChild

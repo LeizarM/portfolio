@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Lock, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { getLine, projects, type Locale, type Project } from "@/lib/content";
 import { paths, ui } from "@/lib/i18n";
 import { lineVar } from "@/lib/lines";
@@ -110,22 +110,15 @@ function ProjectRow({
                   </span>
                 ))}
                 {project.confidential ? (
-                  <span className="inline-flex items-center gap-1">
-                    <Lock aria-hidden className="size-3" />
-                    {t.confidential}
-                  </span>
+                  <span>{t.confidential}</span>
                 ) : null}
               </p>
               <Link
                 href={paths.project(lang, project.slug)}
                 tabIndex={open ? 0 : -1}
-                className="group/link mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground"
+                className="mt-8 inline-flex h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground"
               >
                 {t.open}
-                <ArrowUpRight
-                  aria-hidden
-                  className="size-4 transition-transform duration-300 group-hover/link:rotate-45"
-                />
               </Link>
             </div>
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Lock } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { getLine, projects, type Locale, type Project } from "@/lib/content";
 import { paths, ui } from "@/lib/i18n";
 import { lineClass } from "@/lib/lines";
@@ -32,10 +32,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
             <p className="label-mono flex flex-wrap items-center gap-x-3 gap-y-1">
               {project.kind[lang]}
               {project.confidential ? (
-                <span className="inline-flex items-center gap-1">
-                  <Lock aria-hidden className="size-3.5" />
-                  {ui[lang].projects.confidential}
-                </span>
+                <span>{ui[lang].projects.confidential}</span>
               ) : null}
             </p>
             <h1 className="text-glow mt-3 pb-2 text-[clamp(2.2rem,6vw,4.4rem)] font-semibold leading-[1] tracking-[-0.045em]">
@@ -129,7 +126,7 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
 
         <Link
           href={paths.project(lang, next.slug)}
-          className="glass group mt-6 flex items-center justify-between gap-6 rounded-3xl p-7 hover:bg-accent sm:p-10"
+          className="glass mt-6 block rounded-3xl p-7 hover:bg-accent sm:p-10"
         >
           <span>
             <span className="label-mono block">{t.next}</span>
@@ -137,7 +134,6 @@ export function ProjectPage({ project, lang }: { project: Project; lang: Locale 
               {next.title[lang]}
             </span>
           </span>
-          <ArrowRight aria-hidden className="size-7 shrink-0 transition-transform group-hover:translate-x-1" />
         </Link>
       </main>
       <Footer lang={lang} />
