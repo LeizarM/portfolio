@@ -5,6 +5,7 @@ import { BorderBeam } from "@/components/magicui/border-beam";
 import { CopyEmail } from "./copy-email";
 import Threads from "@/components/reactbits/Threads";
 import { RevealText } from "./reveal-text";
+import { SpotWord } from "./spot-word";
 
 export function Contact({ lang }: { lang: Locale }) {
   const t = ui[lang].contact;
@@ -19,6 +20,9 @@ export function Contact({ lang }: { lang: Locale }) {
       aria-labelledby="contacto-titulo"
       className="px-5 pb-24 pt-10 sm:px-8 sm:pb-32"
     >
+      <div className="-mx-5 mb-12 sm:-mx-8">
+        <SpotWord>{ui[lang].nav.contact}</SpotWord>
+      </div>
       <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border bg-card-solid px-6 py-20 text-center sm:px-12 sm:py-28">
         <div aria-hidden className="absolute inset-0 opacity-70">
           <Threads

@@ -310,6 +310,13 @@
   top: 50%;
   width: min(40%, 44rem);
 }
+.hero-3d {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+.hero-3d[data-ready] { opacity: 1; }
 .hero-shade {
   position: absolute;
   inset: 0;
@@ -358,4 +365,52 @@
 @keyframes hero-in {
   from { opacity: 0; transform: translateY(1.2rem); }
   to { opacity: 1; transform: none; }
+}
+
+/* Capítulos de proyecto: cuadrícula de plano de fondo y trazo que avanza con --p. */
+.chapter { --p: 1; border-top: 1px dotted var(--border); }
+.chapter-stage {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--foreground) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 5%, transparent) 1px, transparent 1px);
+  background-size: 6rem 6rem;
+  background-position: center;
+}
+.bp-scrub {
+  stroke-dasharray: 1;
+  stroke-dashoffset: max(0, calc(1 - var(--p) * 2.2));
+}
+@media (min-width: 64rem) {
+  .chapter-copy {
+    opacity: min(1, calc(var(--p) * 9), calc((1 - var(--p)) * 9));
+    translate: 0 calc((0.12 - min(0.12, var(--p))) * 22rem);
+  }
+  .chapter-plan {
+    opacity: min(1, calc(var(--p) * 6), calc((1 - var(--p)) * 9));
+    scale: calc(0.94 + min(0.06, var(--p) * 0.3));
+  }
+}
+
+/* Palabra gigante iluminada por el puntero. */
+.spot-word {
+  --mx: 50%;
+  --my: 40%;
+  margin: 0;
+  overflow: hidden;
+  padding: 0 3.125vw;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 21vw, 24rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: lowercase;
+  white-space: nowrap;
+  color: transparent;
+  background: radial-gradient(
+    circle 26vw at var(--mx) var(--my),
+    var(--foreground) 0%,
+    color-mix(in srgb, var(--foreground) 10%, transparent) 75%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
 }

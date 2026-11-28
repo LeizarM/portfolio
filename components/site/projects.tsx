@@ -1,176 +1,82 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { Plus } from "lucide-react";
 import { getLine, projects, type Locale, type Project } from "@/lib/content";
 import { paths, ui } from "@/lib/i18n";
 import { lineVar } from "@/lib/lines";
-import { cn } from "@/lib/utils";
+import { Blueprint } from "./blueprint";
+import { Chapter } from "./chapter";
 import { RevealText } from "./reveal-text";
 
-/** Recorrido de un dato por el sistema, en una sola fila, con una luz que lo atraviesa. */
-function Flow({ project, label }: { project: Project; label: string }) {
-  const color = lineVar[project.accent];
-  return (
-    <div>
-      <p className="label-mono">{label}</p>
-      <ol className="relative mt-4 flex [container-type:inline-size] flex-col gap-3 sm:flex-row sm:items-center sm:gap-0">
-        <span aria-hidden className="absolute inset-x-0 top-1/2 hidden h-px bg-border sm:block" />
-        <span
-          aria-hidden
-          className="animate-flow absolute left-0 top-1/2 hidden h-[5px] w-16 -translate-y-1/2 rounded-full blur-[2px] sm:block"
-          style={{ background: `linear-gradient(to right, transparent, ${color})` }}
-        />
-        {project.flow.map((node, i) => (
-          <li key={node} className={cn("relative flex items-center", i > 0 && "sm:ml-auto")}>
-            <span
-              className="rounded-full border bg-card-solid px-4 py-2 font-mono text-[0.85rem]"
-              style={{ boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${color} 35%, transparent)` }}
-            >
-              {node}
-            </span>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
-function ProjectRow({
-  project,
-  lang,
-  open,
-  onToggle,
-}: {
-  project: Project;
-  lang: Locale;
-  open: boolean;
-  onToggle: () => void;
-}) {
+function ProjectChapter({ project, index, lang }: { project: Project; index: number; lang: Locale }) {
   const t = ui[lang].projects;
   const color = lineVar[project.accent];
-  const panelId = `proyecto-${project.slug}`;
+  const count = `${String(index + 1).padStart(2, "0")} / ${String(projects.length).padStart(2, "0")}`;
 
   return (
-    <li className="group/row border-t border-dotted last:border-b">
-      <h3>
-        <button
-          type="button"
-          onClick={onToggle}
-          aria-expanded={open}
-          aria-controls={panelId}
-          className="flex w-full cursor-pointer items-center gap-5 py-7 text-left sm:gap-8 sm:py-9"
-        >
-          <span
-            aria-hidden
-            className="size-3 shrink-0 rounded-full transition-transform duration-300 group-hover/row:scale-150"
-            style={{ background: color, boxShadow: `0 0 16px ${color}` }}
-          />
-          <span
-            className={cn(
-              "flex-1 font-display text-[clamp(1.7rem,5.2vw,4.6rem)] font-medium leading-[1] tracking-[-0.035em] transition-[color,opacity,translate] duration-300",
-              open ? "opacity-100" : "opacity-55 group-hover/row:translate-x-2 group-hover/row:opacity-100",
-            )}
-          >
-            {project.title[lang]}
-          </span>
-          <span className="label-mono hidden max-w-[16rem] text-right lg:block">{project.kind[lang]}</span>
-          <span
-            className={cn(
-              "flex size-11 shrink-0 items-center justify-center rounded-full border transition-[rotate,background-color,color] duration-300 sm:size-14",
-              open ? "rotate-45 bg-foreground text-background" : "group-hover/row:bg-accent",
-            )}
-          >
-            <Plus aria-hidden className="size-5" />
-            <span className="sr-only">{t.expand}</span>
-          </span>
-        </button>
-      </h3>
+    <Chapter className="chapter lg:h-[230svh]">
+      <div className="chapter-stage lg:sticky lg:top-0 lg:h-svh" style={{ "--bp-accent": color } as React.CSSProperties}>
+        <div className="mx-auto grid h-full max-w-[100rem] gap-10 px-[3.125vw] py-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16 lg:py-24">
+          <div className="chapter-copy">
+            <p className="label-mono flex items-center gap-3">
+              <span aria-hidden className="size-2 rounded-full" style={{ background: color }} />
+              <span className="tabular-nums">{count}</span>
+              <span>{project.kind[lang]}</span>
+            </p>
+            <h3 className="mt-6 font-display text-[clamp(2.5rem,5.6vw,5.5rem)] font-bold uppercase leading-[0.9] tracking-[-0.04em]">
+              {project.title[lang]}
+            </h3>
+            <p className="mt-7 max-w-[46ch] text-[1.12rem] leading-relaxed">{project.summary[lang]}</p>
+            <p className="label-mono mt-7 flex flex-wrap items-center gap-x-4 gap-y-1">
+              {project.lines.map((id) => (
+                <span key={id} className="inline-flex items-center gap-1.5">
+                  <span aria-hidden className="size-1.5 rounded-full" style={{ background: lineVar[id] }} />
+                  {getLine(id).name[lang]}
+                </span>
+              ))}
+              {project.confidential ? <span>{t.confidential}</span> : null}
+            </p>
+            <Link
+              href={paths.project(lang, project.slug)}
+              className="label-caps mt-9 inline-flex h-12 items-center rounded-full bg-primary px-6 text-primary-foreground transition-opacity hover:opacity-85 active:opacity-70"
+            >
+              {t.open}
+            </Link>
+          </div>
 
-      <div
-        id={panelId}
-        className={cn(
-          "grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
-        )}
-      >
-        <div className={cn("overflow-hidden", !open && "invisible")}>
-          <div className="grid gap-10 pb-10 pl-8 sm:pl-11 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
-            <div>
-              <p className="label-mono flex flex-wrap items-center gap-x-3 lg:hidden">
-                <span style={{ color }}>{project.kind[lang]}</span>
-              </p>
-              <p className="mt-3 max-w-[52ch] text-[1.15rem] leading-relaxed lg:mt-0">{project.summary[lang]}</p>
-              <p className="label-mono mt-5 flex flex-wrap items-center gap-x-4 gap-y-1">
-                {project.lines.map((id) => (
-                  <span key={id} className="inline-flex items-center gap-1.5">
-                    <span aria-hidden className="size-1.5 rounded-full" style={{ background: lineVar[id] }} />
-                    {getLine(id).name[lang]}
-                  </span>
-                ))}
-                {project.confidential ? (
-                  <span>{t.confidential}</span>
-                ) : null}
-              </p>
-              <Link
-                href={paths.project(lang, project.slug)}
-                tabIndex={open ? 0 : -1}
-                className="mt-8 inline-flex h-12 items-center rounded-full bg-primary px-6 font-semibold text-primary-foreground"
-              >
-                {t.open}
-              </Link>
-            </div>
-
-            <div className="space-y-8">
-              <Flow project={project} label={t.flow} />
-              <ul className="flex flex-wrap gap-1.5">
-                {project.stack.map((tech) => (
-                  <li
-                    key={tech}
-                    className="rounded-full border bg-card px-3 py-1 font-mono text-[0.78rem] text-muted-foreground"
-                  >
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="chapter-plan">
+            <p className="label-mono">{t.flow}</p>
+            <Blueprint nodes={project.flow} scrub className="mt-4 w-full" />
+            <ul className="mt-6 flex flex-wrap gap-1.5 border-t border-dotted pt-6">
+              {project.stack.map((tech) => (
+                <li key={tech} className="rounded-full border px-3 py-1 font-mono text-[0.78rem] text-muted-foreground">
+                  {tech}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
-    </li>
+    </Chapter>
   );
 }
 
-/** Índice de proyectos: una fila grande por proyecto que se despliega al tocarla. */
+/** Proyectos como capítulos: cada uno ocupa la pantalla y su plano se dibuja al avanzar. */
 export function Projects({ lang }: { lang: Locale }) {
   const t = ui[lang].projects;
-  const [open, setOpen] = useState<string | null>(projects[0]?.slug ?? null);
 
   return (
-    <section id="proyectos" aria-labelledby="proyectos-titulo" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <RevealText
-            id="proyectos-titulo"
-            className="font-display text-[clamp(2.4rem,6.4vw,5rem)] font-bold uppercase leading-[0.95] tracking-[-0.035em]"
-          >
-            {t.title}
-          </RevealText>
-          <p className="max-w-[52ch] text-[1.05rem] text-muted-foreground lg:text-right">{t.intro}</p>
-        </div>
-        <ul className="mt-12">
-          {projects.map((project) => (
-            <ProjectRow
-              key={project.slug}
-              project={project}
-              lang={lang}
-              open={open === project.slug}
-              onToggle={() => setOpen((current) => (current === project.slug ? null : project.slug))}
-            />
-          ))}
-        </ul>
+    <section id="proyectos" aria-labelledby="proyectos-titulo" className="relative pt-24 sm:pt-32">
+      <div className="flex flex-col gap-5 px-[3.125vw] pb-10 lg:flex-row lg:items-end lg:justify-between">
+        <RevealText
+          id="proyectos-titulo"
+          className="font-display text-[clamp(3rem,11vw,10rem)] font-bold uppercase leading-[0.85] tracking-[-0.045em]"
+        >
+          {t.title}
+        </RevealText>
+        <p className="max-w-[46ch] text-[1.05rem] text-muted-foreground lg:pb-3 lg:text-right">{t.intro}</p>
       </div>
+      {projects.map((project, index) => (
+        <ProjectChapter key={project.slug} project={project} index={index} lang={lang} />
+      ))}
     </section>
   );
 }

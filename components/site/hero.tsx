@@ -3,6 +3,7 @@ import { hero, projects, site, type Locale } from "@/lib/content";
 import { ui } from "@/lib/i18n";
 import { asset } from "@/lib/utils";
 import { Blueprint } from "./blueprint";
+import { DeskScene } from "./desk-scene";
 
 const copy = {
   es: { place: "Backend y móvil. La Paz, Bolivia.", scroll: "Desliza para continuar", tab: "Proyectos" },
@@ -25,6 +26,7 @@ export function Hero({ lang }: { lang: Locale }) {
       <div aria-hidden className="hero-mat">
         <Blueprint nodes={flow} className="hero-blueprint" />
       </div>
+      <DeskScene nodes={flow} className="hero-3d" />
       <div aria-hidden className="hero-shade" />
 
       <div className="relative flex min-h-svh flex-col px-[3.125vw] pb-8 pt-24 sm:pt-28">
@@ -34,7 +36,7 @@ export function Hero({ lang }: { lang: Locale }) {
           <span className="sr-only"> {rest.join(" ")}</span>
         </h1>
 
-        <p className="hero-in mt-auto max-w-[19ch] self-end pt-16 font-display text-[clamp(1.35rem,2.5vw,2.25rem)] font-medium leading-[1.12] tracking-[-0.02em] sm:mr-[4vw]">
+        <p className="hero-in mt-auto max-w-[19ch] self-end pt-16 font-display text-[clamp(1.35rem,2.5vw,2.25rem)] font-medium leading-[1.12] tracking-[-0.02em] [text-shadow:0_2px_22px_#100904d9] sm:mr-[4vw]">
           {hero.headline[lang].join(" ")}
         </p>
 
