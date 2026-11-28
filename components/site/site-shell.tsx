@@ -19,7 +19,7 @@ export function SiteShell({ lang, children }: { lang: Locale; children: React.Re
         </a>
         <ThemeProvider>
           <MotionProvider>
-            <ClickSpark sparkColor="#3ddcff" sparkCount={10} sparkRadius={22}>
+            <ClickSpark sparkColor="#f0641e" sparkCount={10} sparkRadius={22}>
               {children}
             </ClickSpark>
           </MotionProvider>

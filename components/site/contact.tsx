@@ -22,8 +22,8 @@ export function Contact({ lang }: { lang: Locale }) {
       <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] border bg-card-solid px-6 py-20 text-center sm:px-12 sm:py-28">
         <div aria-hidden className="absolute inset-0 opacity-70">
           <Threads
-            color="#3ddcff"
-            accentColor="#3ddcff"
+            color="#f0641e"
+            accentColor="#dc5000"
             amplitude={1.1}
             lineCount={34}
             enableMouseInteraction
@@ -36,7 +36,7 @@ export function Contact({ lang }: { lang: Locale }) {
         <div className="relative flex flex-col items-center">
           <RevealText
             id="contacto-titulo"
-            className="text-glow max-w-[17ch] pb-2 text-[clamp(2.2rem,6vw,4.6rem)] font-semibold leading-[1.02] tracking-[-0.045em]"
+            className="text-glow max-w-[17ch] pb-2 font-display text-[clamp(2.2rem,6vw,4.6rem)] font-bold uppercase leading-[0.98] tracking-[-0.035em]"
           >
             {t.title}
           </RevealText>

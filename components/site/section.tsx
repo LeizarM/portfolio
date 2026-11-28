@@ -15,7 +15,7 @@ export function Section({ id, title, intro, className, children }: SectionProps)
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <RevealText
           id={`${id}-titulo`}
-          className="text-[clamp(2.2rem,5.4vw,3.9rem)] font-semibold leading-[1.02] tracking-[-0.04em]"
+          className="font-display text-[clamp(2.4rem,6.4vw,5rem)] font-bold uppercase leading-[0.95] tracking-[-0.035em]"
         >
           {title}
         </RevealText>

@@ -53,7 +53,7 @@ function ProjectRow({
   const panelId = `proyecto-${project.slug}`;
 
   return (
-    <li className="group/row border-t last:border-b">
+    <li className="group/row border-t border-dotted last:border-b">
       <h3>
         <button
           type="button"
@@ -69,7 +69,7 @@ function ProjectRow({
           />
           <span
             className={cn(
-              "flex-1 text-[clamp(1.7rem,5.2vw,4.6rem)] font-medium leading-[1] tracking-[-0.05em] transition-[color,opacity,translate] duration-300",
+              "flex-1 font-display text-[clamp(1.7rem,5.2vw,4.6rem)] font-medium leading-[1] tracking-[-0.035em] transition-[color,opacity,translate] duration-300",
               open ? "opacity-100" : "opacity-55 group-hover/row:translate-x-2 group-hover/row:opacity-100",
             )}
           >
@@ -153,7 +153,7 @@ export function Projects({ lang }: { lang: Locale }) {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <RevealText
             id="proyectos-titulo"
-            className="text-[clamp(2.2rem,5.4vw,3.9rem)] font-semibold leading-[1.02] tracking-[-0.04em]"
+            className="font-display text-[clamp(2.4rem,6.4vw,5rem)] font-bold uppercase leading-[0.95] tracking-[-0.035em]"
           >
             {t.title}
           </RevealText>

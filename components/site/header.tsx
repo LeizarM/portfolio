@@ -3,6 +3,7 @@ import { site, type Locale } from "@/lib/content";
 import { paths, ui } from "@/lib/i18n";
 import { ThemeToggle } from "./theme-toggle";
 
+/** Cabecera sin caja: nombre a la izquierda y secciones a la derecha, legible sobre cualquier fondo. */
 export function Header({ lang, altHref }: { lang: Locale; altHref: string }) {
   const t = ui[lang];
   const home = paths.home(lang);
@@ -14,35 +15,28 @@ export function Header({ lang, altHref }: { lang: Locale; altHref: string }) {
   ];
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-4 z-40 px-4">
-      <div className="glass pointer-events-auto mx-auto flex h-14 max-w-4xl items-center gap-4 rounded-full pl-5 pr-2">
-        <Link href={home} className="flex items-center gap-2.5 font-semibold tracking-tight">
-          <span
-            aria-hidden
-            className="size-2.5 rounded-full bg-glow-b"
-          />
+    <header className="fixed inset-x-0 top-0 z-40 text-[#ffedd7] mix-blend-difference">
+      <div className="flex h-16 items-center gap-4 px-[3.125vw]">
+        <Link href={home} className="font-display text-[1.15rem] font-bold uppercase tracking-[-0.02em]">
           {site.shortName}
         </Link>
         <nav aria-label={lang === "es" ? "Secciones" : "Sections"} className="ml-auto hidden md:block">
-          <ul className="flex items-center gap-1 text-[0.92rem]">
+          <ul className="flex items-center gap-1">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="rounded-full px-3 py-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                >
+                <Link href={item.href} className="label-caps px-3 py-2 opacity-80 transition-opacity hover:opacity-100">
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <div className="ml-auto flex items-center md:ml-0">
+        <div className="ml-auto flex items-center md:ml-2">
           <Link
             href={altHref}
             hrefLang={lang === "es" ? "en" : "es"}
             aria-label={t.switchLangLabel}
-            className="inline-flex h-10 items-center rounded-full px-3 font-mono text-[0.8rem] text-muted-foreground hover:bg-accent hover:text-foreground"
+            className="label-caps inline-flex h-10 items-center px-3 opacity-80 transition-opacity hover:opacity-100"
           >
             {lang === "es" ? "EN" : "ES"}
           </Link>
